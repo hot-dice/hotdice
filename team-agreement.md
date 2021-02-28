@@ -31,7 +31,7 @@
 
 ## Communication Plan
 
-* Group Slack Channel - Install on Phone and Computer
+* [Group Slack Channel](https://codefellows.slack.com/archives/G01PFL9E21Y "Group Slack Channel") - Install on Phone and Computer
 
 * Ensuring everyone is heard
 
