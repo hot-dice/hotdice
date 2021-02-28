@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start": "npx serve",
+    "test:open": "./node_modules/.bin/cypress open",
+    "test:run": "./node_modules/.bin/cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^6.5.0"
+  }
+}
