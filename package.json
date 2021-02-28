@@ -1,10 +1,11 @@
 {
   "scripts": {
-    "start": "npx serve",
+    "start": "npx serve dist",
     "test:open": "./node_modules/.bin/cypress open",
     "test:run": "./node_modules/.bin/cypress run"
   },
   "devDependencies": {
-    "cypress": "^6.5.0"
+    "cypress": "^6.5.0",
+    "gh-pages": "^3.1.0"
   }
 }
