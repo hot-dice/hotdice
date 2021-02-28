@@ -2,9 +2,18 @@ name: Test Pull Request
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the dev branch
+  # Triggers the workflow on pull request events for dev and main
   pull_request:
     branches: [ dev, main ]
+  # Manual trigger e2e tests
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Run Cypress Tests'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
