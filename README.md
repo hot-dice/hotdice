@@ -1,2 +1,2 @@
 # hotdice
-Hot Dice aka boxcar
+Hot Dice
