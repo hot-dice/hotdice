@@ -7,4 +7,5 @@ Hot Dice is another name for dice game [Farkle](https://en.wikipedia.org/wiki/Fa
 
 #### Resources
 
-[Dice Images](https://game-icons.net/tags/dice.html)
+[CSS Reset](https://meyerweb.com/eric/tools/css/reset/ "CSS Reset")
+[Dice Images](https://1dollarshop.itch.io/dice-dice-dice "Dice Image Source")
