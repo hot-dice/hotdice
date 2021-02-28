@@ -36,7 +36,7 @@ jobs:
           wait-on: http://localhost:5000
           browser: chrome
           headless: true
-          spec: cypress/integration/e2e-hotdice/*.spec.js
+          spec: cypress/integration/e2e-hot-dice/*.spec.js
 
     
     
