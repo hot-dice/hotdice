@@ -1,4 +1,5 @@
 # hotdice
+#### Group Members: Tom McGuire, Anthony Turinski, Xiao Ma, Patrick Laurion
 Hot Dice
 Team Conflict Plan:
 What is the group process to resolve conflict, when it arises?
