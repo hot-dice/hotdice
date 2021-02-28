@@ -2,7 +2,7 @@
   "scripts": {
     "start": "npx serve dist",
     "test:open": "./node_modules/.bin/cypress open",
-    "test:run": "./node_modules/.bin/cypress run"
+    "test:run": "./node_modules/.bin/cypress run --spec 'cypress/integration/e2e-hot-dice/*.spec.js'"
   },
   "devDependencies": {
     "cypress": "^6.5.0",
