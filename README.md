@@ -1,5 +1,5 @@
 # Hot Dice
-#### Group Members: Tom McGuire, Anthony Turinski, Xiao Ma, Patrick Laurion
+#### Group Members: Tom McGuire, Anthony Turinski & Xiao Ma
 
 #### About Hot Dice The Game
 

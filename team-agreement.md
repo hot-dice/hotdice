@@ -6,8 +6,6 @@
 
 * Vote majority, with quorum of 3
 
-* Tom has veto power - can be overruled by quorum.
-
 ### How will you raise concerns to members who are not adequately contributing?
 
 * Address with member in question.
