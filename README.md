@@ -26,3 +26,9 @@ Run locally with the following command; file changes are automatically tracked.
 [gh-pages](https://www.npmjs.com/package/gh-pages "deploy to gh-pages")
 
 [Cypress Github Action](https://github.com/cypress-io/github-action "Cypress GitHub Action")
+
+[Replace](https://stackoverflow.com/questions/40318677/string-replace-on-a-loop#comment67893599_40318677)
+
+[Remove Trailing and Leading Commas Regex](https://stackoverflow.com/questions/40318677/string-replace-on-a-loop#comment67893599_40318677)
+
+[Remove Duplicate Commas Regex](https://stackoverflow.com/a/42915166)
