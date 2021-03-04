@@ -70,9 +70,9 @@ var scoreTuples = [
 ];
 
 /***
- * Calculates Score, Remaining Dice, and Scored Dice
- * @param {array} rollToCheck A Numeric Array of Dice to Check - [1,3,2,4,1]
- * @returns {array} [score, [diceToRollAgain], [diceToStore]]
+ * Calculates score, remaining dice, and scored dice
+ * @param {array} rollToCheck Array of numbers e.g. `[5,4,4,3]`
+ * @returns {object} An object e.g `{score: 50, diceToRollAgain: [3,4,4], diceToStore: [5]}`
  */
 function getScore(rollToCheck) {
   let score = 0;
