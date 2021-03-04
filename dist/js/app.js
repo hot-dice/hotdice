@@ -117,7 +117,26 @@ function getScore(rollToCheck) {
   return {score: score, diceToRollAgain: diceToRollAgain, diceToScore: diceToStore}
 }
 
-// Test Cases
+/***
+ * Calculates an array of random number(s)
+ * @param {number} numberOfRandoms A int of number of desired random e.g. `6`
+ * @param {number} [min=1] The minimum number for random values inclusive
+ * @param {number} [max=6] The maximum number for random inclusive 
+ * @returns {array} An array of random numbers `[1,2,4,2,5,6]`
+ */
+function getRandom(numberOfRandoms, min = 1, max = 6) {
+  let randomNumberArray = [];
+  for (let i = 0; i < numberOfRandoms; i++) {
+    let randomBuffer = new Uint32Array(1); // Creates a new Uint32Array object.
+    (window.crypto || window.msCrypto).getRandomValues(randomBuffer); // Get cryptographically strong random values
+    let randomFloat = randomBuffer[0] / (0xffffffff + 1); // Translate from a random integer to a floating point from 0 to 1
+    randomNumberArray.push(Math.floor(randomFloat * (max - min + 1)) + min);
+  }
+  return randomNumberArray;
+}
+
+
+// Test Cases for getScore
 var time1 = performance.now();
 console.log('Should Be 4000: ', getScore([1,1,1,1,1,1]));
 console.log('Should Be 300: ', getScore([3,2,3,4,2,3]));
