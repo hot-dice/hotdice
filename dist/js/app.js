@@ -72,7 +72,7 @@ var scoreTuples = [
 /***
  * Calculates Score, Remaining Dice, and Scored Dice
  * @param {array} rollToCheck A Numeric Array of Dice to Check - [1,3,2,4,1]
- * @returns {array} [score, [diceToRollAgain], [diceToStore]]
+ * @returns {object} {score, [diceToRollAgain], [diceToStore]}
  */
 function getScore(rollToCheck) {
   let score = 0;
@@ -80,7 +80,7 @@ function getScore(rollToCheck) {
   let remainingDiceString = rollToCheck.sort().toString();
   for (let i = 0; i < scoreTuples.length; i++) {
     if (remainingDiceString.includes(scoreTuples[i][0])) {
-      // Do Some Regex to remove score strings already counted, duplicate, leading, and trailing commas
+      // Do Some Regex to remove score strings, duplicate, leading, and trailing commas
       savedDiceString = scoreTuples[i][0];
       remainingDiceString = remainingDiceString.replace(scoreTuples[i][0], '').replace(/,+/g,',').replace(/(^,)|(,$)/g, '');
       score += scoreTuples[i][1];
