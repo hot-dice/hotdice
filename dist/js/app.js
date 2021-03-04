@@ -70,42 +70,55 @@ var scoreTuples = [
 ];
 
 /***
- * Get Score and Return Remaining Dice
- * @param {array} rollToCheck A Numeric Array of Dice to Check.
- * @returns {array} [score, [diceEligibleToRollAgain]]
+ * Calculates Score, Remaining Dice, and Scored Dice
+ * @param {array} rollToCheck A Numeric Array of Dice to Check - [1,3,2,4,1]
+ * @returns {array} [score, [diceToRollAgain], [diceToStore]]
  */
 function getScore(rollToCheck) {
   let score = 0;
-  var remainingDiceString = rollToCheck.sort().toString();
+  let savedDiceString;
+  let remainingDiceString = rollToCheck.sort().toString();
   for (let i = 0; i < scoreTuples.length; i++) {
     if (remainingDiceString.includes(scoreTuples[i][0])) {
       // Do Some Regex to remove score strings already counted, duplicate, leading, and trailing commas
+      savedDiceString = scoreTuples[i][0];
       remainingDiceString = remainingDiceString.replace(scoreTuples[i][0], '').replace(/,+/g,',').replace(/(^,)|(,$)/g, '');
       score += scoreTuples[i][1];
     }
   }
 
-  // Create Remaining Dice
+  var diceToStore = [];
+  var diceToRollAgain = [];
+  // Didn't Bust
   if (score) {
+    let remainingDiceArray = [];
+    let savedDiceArray = [];
     if (remainingDiceString.length > 1) {
-      remainingDiceString = remainingDiceString.split(',');
+      remainingDiceArray = remainingDiceString.split(',');
     } else {
-      remainingDiceString = Array.from(remainingDiceString);
+      remainingDiceArray = Array.from(remainingDiceString);
     }
-  } else {
-    remainingDiceString = [];
+    if (savedDiceString.length > 1) {
+      savedDiceArray = savedDiceString.split(',');
+    } else {
+      savedDiceArray = Array.from(savedDiceString);
+    }
+    // Convert Remaining Dice to Numbers if score
+    remainingDiceArray.forEach(dice => {
+      diceToRollAgain.push(+dice);
+    });
+    savedDiceArray.forEach(dice => {
+      diceToStore.push(+dice);
+    });
   }
 
-  // Convert Remaining Dice to Numbers
-  let diceEligibleToRollAgain = [];
-  remainingDiceString.forEach(dice => {
-    diceEligibleToRollAgain.push(+dice);
-  })
-  // Return Score and Remaining Dice
-  return [score, diceEligibleToRollAgain]
+  // Return Score, Dice Eligible To Roll Again And Dice To Store As An Object
+  // return [score, diceToRollAgain, diceToStore]; // Slightly faster and more consistent with objects
+  return {score: score, diceToRollAgain: diceToRollAgain, diceToScore: diceToStore}
 }
 
 // Test Cases
+var time1 = performance.now();
 console.log('Should Be 4000: ', getScore([1,1,1,1,1,1]));
 console.log('Should Be 300: ', getScore([3,2,3,4,2,3]));
 console.log('Should Be 300: ', getScore([1,1,5,5]));
@@ -124,3 +137,5 @@ console.log('Should Be 150: ', getScore([3,1,5,4]));
 console.log('Should Be 1200: ', getScore([4,4,4,4,4]));
 console.log('Should Be 1300: ', getScore([4,4,4,4,4,1]));
 console.log('Should Be 2100: ', getScore([1,5,1,5,1,1]));
+var time2 = performance.now();
+console.log(`Time Elapsed: ${(time2 - time1) / 1000} seconds.`);
