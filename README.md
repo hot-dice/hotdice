@@ -33,3 +33,17 @@ Run locally with the following command; file changes are automatically tracked.
 [Remove Trailing and Leading Commas Regex](https://stackoverflow.com/questions/40318677/string-replace-on-a-loop#comment67893599_40318677)
 
 [Remove Duplicate Commas Regex](https://stackoverflow.com/a/42915166)
+
+[Create Random Numbers with window.crypto](https://stackoverflow.com/a/42321673/7967484)
+
+[Math.random() in 2020](https://stackoverflow.com/a/64520554/7967484)
+
+[How does JavaScript’s Math.random() generate random numbers?](https://hackernoon.com/how-does-javascripts-math-random-generate-random-numbers-ef0de6a20131)
+
+[Secure random values (in Node.js)](https://gist.github.com/joepie91/7105003c3b26e65efcea63f3db82dfba)
+
+[Uint32Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array)
+
+[Crypto.getRandomValues()](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues)
+
+[Use crypto.getRandomValues for new seeds](https://github.com/chancejs/chancejs/issues/232#issuecomment-182500222)
