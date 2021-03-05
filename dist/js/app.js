@@ -1,73 +1,83 @@
 'use strict';
 
-// Constant Score Tuples - An Array of Nested Pairings
-var scoreTuples = [
-  ['1,1,1,1,1,1',4000],
-  ['1,1,1,1,1,1',4000],
-  ['1,1,1,1,1,1',4000],
-  ['1,2,3,4,5,6',3200],
-  ['2,2,2,2,2,2',3200],
-  ['3,3,3,3,3,3',3200],
-  ['4,4,4,4,4,4',3200],
-  ['5,5,5,5,5,5',3200],
-  ['6,6,6,6,6,6',3200],
-  ['1,1,1,2,2,2',3200],
-  ['1,1,1,3,3,3',3200],
-  ['1,1,1,4,4,4',3200],
-  ['1,1,1,5,5,5',3200],
-  ['1,1,1,6,6,6',3200],
-  ['2,2,2,3,3,3',3200],
-  ['2,2,2,4,4,4',3200],
-  ['2,2,2,5,5,5',3200],
-  ['2,2,2,6,6,6',3200],
-  ['3,3,3,4,4,4',3200],
-  ['3,3,3,5,5,5',3200],
-  ['3,3,3,6,6,6',3200],
-  ['4,4,4,5,5,5',3200],
-  ['4,4,4,6,6,6',3200],
-  ['5,5,5,6,6,6',3200],
-  ['1,1,2,2,3,3',3200],
-  ['1,1,2,2,4,4',3200],
-  ['1,1,2,2,5,5',3200],
-  ['1,1,2,2,6,6',3200],
-  ['1,1,3,3,4,4',3200],
-  ['1,1,3,3,5,5',3200],
-  ['1,1,3,3,6,6',3200],
-  ['1,1,4,4,5,5',3200],
-  ['1,1,5,5,6,6',3200],
-  ['2,2,3,3,4,4',3200],
-  ['2,2,3,3,5,5',3200],
-  ['2,2,3,3,6,6',3200],
-  ['2,2,4,4,5,5',3200],
-  ['2,2,4,4,6,6',3200],
-  ['2,2,5,5,6,6',3200],
-  ['3,3,4,4,5,5',3200],
-  ['3,3,4,4,6,6',3200],
-  ['3,3,5,5,6,6',3200],
-  ['4,4,5,5,6,6',3200],
-  ['1,1,1,1,1', 3000],
-  ['6,6,6,6,6', 1800],
-  ['5,5,5,5,5', 1500],
-  ['4,4,4,4,4', 1200],
-  ['3,3,3,3,3', 900],
-  ['2,2,2,2,2', 600],
-  ['1,1,1,1', 2000],
-  ['6,6,6,6', 1200],
-  ['5,5,5,5', 1000],
-  ['4,4,4,4', 800],
-  ['3,3,3,3', 600],
-  ['2,2,2,2', 400],
-  ['1,1,1', 1000],
-  ['6,6,6', 600],
-  ['5,5,5', 500],
-  ['4,4,4', 400],
-  ['3,3,3', 300],
-  ['2,2,2', 200],
-  ['1,1', 200],
-  ['5,5', 100],
-  ['1', 100],
-  ['5', 50]
-];
+const players = JSON.parse(localStorage.getItem('Player_List')) || [];
+
+/***
+ * InitGame
+ */
+function Game() {
+  this.gameActive = true;
+  this.activePlayer
+}
+
+/***
+ * Player Object Constructor Function
+ * @param {string} playerName
+ */
+function Player(playerName) {
+  this.name = playerName;
+  this.id = uuidv4();
+  this.totalScore = 0;
+  this.roundScore = 0;
+  this.diceHeld = [];
+  this.diceRolled = [];
+  this.createPlayer();
+}
+
+// Player ProtoTypes
+// Add round score to total and reset player round state
+Player.prototype.addRoundScoreToTotal = function() {
+  this.totalScore += roundScore;
+  this.roundScore = 0;
+  this.diceHeld = [];
+  this.diceRolled = [];
+  this.saveState();
+}
+
+// Hold dice that are valid to hold and passed to this function
+Player.prototype.holdDice = function(dice) {
+  let tempDice = getScore(dice);
+  console.log(tempDice);
+  this.diceHeld.push.apply(this.diceHeld, tempDice.diceToScore);
+  this.roundScore += tempDice.score;
+  this.diceRolled = dice.filter(die => !this.diceHeld.includes(die));
+  this.saveState();
+}
+
+// Roll those dice
+Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
+  this.diceRolled = getRandom(numberOfDiceToRoll);
+}
+
+// Create player objects and push to players and save to localStorage
+Player.prototype.createPlayer = function() {
+  players.push(this);
+  localStorage.setItem('Player_List', JSON.stringify(players));
+}
+
+// Update the correct player object
+Player.prototype.saveState = function() {
+  if(players.length) {
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].id === this.id) {
+        players[i] = this;
+        break;
+      }
+    }
+  }
+  localStorage.setItem('Player_List', JSON.stringify(players));
+}
+
+// TODO maybe consolidate this into something else
+Player.prototype.clearRoundScore = function() {
+  this.roundScore = 0;
+};
+
+// Init Our Player Objects - Temporary for now
+if (localStorage.getItem('Player_List') === null) {
+  new Player('Test00');
+  new Player('Test01');
+}
 
 /***
  * Calculates score, remaining dice, and scored dice
@@ -133,6 +143,16 @@ function getRandom(numberOfRandoms, min = 1, max = 6) {
     randomNumberArray.push(Math.floor(randomFloat * (max - min + 1)) + min);
   }
   return randomNumberArray;
+}
+
+/***
+ * Creates a random UUID
+ * @returns {string} A cryptographically secure UUID
+ */
+ function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ (window.crypto || window.msCrypto).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
 }
 
 
