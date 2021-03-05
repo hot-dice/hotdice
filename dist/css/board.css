@@ -48,7 +48,6 @@ body {
   grid-template-columns: 1fr;
   grid-area: play-area;
   
-  justify-items: center;
   color: white;
   font-size: 20px;
   background-image: url("../assets/bar.png");
