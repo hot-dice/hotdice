@@ -23,7 +23,7 @@ html {
     margin: 8px;
 }
 
-.about-section{
+.about-us{
     padding: 50px;
     text-align: center;
     background-color: bisque;
@@ -42,10 +42,6 @@ html {
 
 .title {
     color: grey;
-}
-
-.button:hover {
-    background-color: #555;
 }
 
 @media screen and (max-width: 650px) {
