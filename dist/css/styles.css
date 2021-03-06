@@ -45,6 +45,19 @@ body {
   padding: 5%;
 }
 
+#dice-hold-area ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  justify-items: center;
+  align-items: center;
+  gap: 2%;
+}
+
+#dice-hold-area ul .die {
+  width: 2rem;
+  height: 2rem;
+}
+
 #dice-hold-area {
   display: grid;
   grid-area: dice-hold-area;

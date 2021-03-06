@@ -15,15 +15,17 @@
       <p id="CPU-score">Player2 Score: </p> 
       <img id="gear" src="assets/gear50x50.png" alt="settings icon">
     </div>
-    <div id="round-score">Round Score: 1000</div>
+    <div id="round-score"></div>
     <div id="board-area">
       <ul></ul>
     </div>
-    <div id="dice-hold-area">Player Dice Table</div>
+    <div id="dice-hold-area">Player Dice Table
+      <ul></ul>
+    </div>
     <div id="actions">
       <button>Select Dice</button>
-      <button>Roll Again</button>
-      <button>Stay</button>
+      <button onclick="players[0].rollDice()">Roll Dice</button>
+      <button onclick="players[0].holdDice(players[0].diceRolled)">Stay</button>
     </div>
   </body>
   <script src="js/constants.js" async defer></script>

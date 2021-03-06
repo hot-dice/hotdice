@@ -1,35 +1,60 @@
 'use strict';
 
-const players = JSON.parse(localStorage.getItem('Player_List')) || [];
-const dice = JSON.parse(localStorage.getItem('Dice_List')) || [];
+const players = []; // JSON.parse(localStorage.getItem('Player_List')) || [];
+const dice = []; //JSON.parse(localStorage.getItem('Dice_List')) || [];
 
 /***
  * InitGame
  */
  function Game() {
   this.gameActive = true;
-  this.activePlayer
+  this.activePlayer;
+  this.newGame();
+}
+
+Game.prototype.newGame = function() {
+// Init Our Player Objects - Temporary for now
+  if (localStorage.getItem('Player_List') === null) {
+    new Player('Test00');
+    new Player('Test01');
+  }
+
+  // Init Our Die Objects - Temporary for now
+  // if (localStorage.getItem('Dice_List') === null) {
+  //   new Dice(1);
+  //   new Dice(2);
+  //   new Dice(3);
+  //   new Dice(4);
+  //   new Dice(5);
+  //   new Dice(3);
+  // }
+  // renderDieImgElements()
 }
 
 /***
  * Die Object Constructor Function
  * @param {string} value
  */
-function Die(value) {
+function Dice(value) {
   this.value = value;
   this.src = `assets/die-${value}.png`;
   this.altText = `Die with value: ${value}`;
   this.createDie();
 }
 
-Die.prototype.createDie = function() {
+Dice.prototype.createDie = function() {
   dice.push(this);
   localStorage.setItem('Dice_List', JSON.stringify(dice));
 }
 
-function createDieImgElements(selectorToRenderIn = '#board-area ul', diceArray = dice) {
+// Global Functions
+function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-area ul') {
+  // Remove existing dice elements if present
   let renderLocation = document.querySelector(`${selectorToRenderIn}`);
-  console.log(renderLocation);
+  while (renderLocation.lastChild) { 
+    renderLocation.removeChild(renderLocation.lastChild);
+  }
+  // Convert list
   diceArray.forEach((die) => {
     let listItem = document.createElement('li');
     listItem.value = die.value;
@@ -42,15 +67,21 @@ function createDieImgElements(selectorToRenderIn = '#board-area ul', diceArray =
   });
 }
 
-createDieImgElements()
-// Init Our Die Objects - Temporary for now
-if (localStorage.getItem('Dice_List') === null) {
-  new Die(1);
-  new Die(2);
-  new Die(3);
-  new Die(4);
-  new Die(5);
-  new Die(6);
+function renderRoundScore(score) {
+  let renderLocation = document.querySelector(`#round-score`);
+  renderLocation.textContent = score;
+}
+
+function convertToDiceArrayOfObjects(inputArray) { // [1,2,3,4]
+  const objectArray = [];
+  inputArray.forEach(item => {
+    let tempObject = {};
+    tempObject.value = item;
+    tempObject.src = `assets/die-${item}.png`;
+    tempObject.altText = `Die with value: ${item}`;
+    objectArray.push(tempObject);
+  });
+  return objectArray;
 }
 
 /***
@@ -85,11 +116,27 @@ Player.prototype.holdDice = function(dice) {
   this.roundScore += tempDice.score;
   this.diceRolled = dice.filter(die => !this.diceHeld.includes(die));
   this.saveState();
+  renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
+  if (this.diceHeld.length < 6) {
+    renderDieImgElements(convertToDiceArrayOfObjects(this.diceHeld), '#dice-hold-area ul');
+  } else {
+    this.diceHeld = [];
+    let holdArea = document.querySelector(`#dice-hold-area ul`);
+    while (holdArea.lastChild) { 
+      holdArea.removeChild(holdArea.lastChild);
+    }
+  }
+  
+  renderRoundScore(this.roundScore);
+  return this.diceHeld;
 }
 
 // Roll those dice
 Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
   this.diceRolled = getRandom(numberOfDiceToRoll);
+  renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
+  this.saveState();
+  return this.diceRolled;
 }
 
 // Create player objects and push to players and save to localStorage
@@ -115,12 +162,6 @@ Player.prototype.saveState = function() {
 Player.prototype.clearRoundScore = function() {
   this.roundScore = 0;
 };
-
-// Init Our Player Objects - Temporary for now
-if (localStorage.getItem('Player_List') === null) {
-  new Player('Test00');
-  new Player('Test01');
-}
 
 /***
  * Calculates score, remaining dice, and scored dice
@@ -201,7 +242,6 @@ function getRandom(numberOfRandoms, min = 1, max = 6) {
   );
 }
 
-
 // Test Cases for getScore
 var time1 = performance.now();
 console.log('Should Be 4000: ', getScore([1,1,1,1,1,1]));
@@ -224,3 +264,5 @@ console.log('Should Be 1300: ', getScore([4,4,4,4,4,1]));
 console.log('Should Be 2100: ', getScore([1,5,1,5,1,1]));
 var time2 = performance.now();
 console.log(`Time Elapsed: ${(time2 - time1) / 1000} seconds.`);
+
+new Game;
