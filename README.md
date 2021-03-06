@@ -52,4 +52,8 @@ Run locally with the following command; file changes are automatically tracked.
 
 [UUID Generator](https://gist.github.com/jed/982883)
 
+<<<<<<< HEAD
 [Generating UUID's in Vanilla JavaScript](https://stackoverflow.com/a/2117523/7967484)
+=======
+[Generating UUID's in Vanilla JavaScript](https://stackoverflow.com/a/2117523/7967484)
+>>>>>>> f7c2c79ff43a77c8dd85ff36467bdfb6752a010d
