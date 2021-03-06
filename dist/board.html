@@ -15,14 +15,31 @@
         <p id="player-score">Player Score: </p> <p id="CPU-score">Computer Score: </p> <img id="gear" src="assets/gear50x50.png" alt="settings icon">
       </div>
       <div id="game">
-        <div id="computer-area">AI table here</div>
-        <div id="board-area">Board Area</div>
+        <div id="board-area">
+          <span id="board-rack">
+            <img id="1" src="assets/rolling-dice.gif">
+            <img id="2" src="assets/rolling-dice.gif">
+            <img id="3" src="assets/rolling-dice.gif">
+            <img id="4" src="assets/rolling-dice.gif">
+            <img id="5" src="assets/rolling-dice.gif">
+            <img id="6" src="assets/rolling-dice.gif">
+          </span>
+          <button id="roll-dice-button">Roll Dice</button>
+        </div>
         <!-- <div id="round-score">Round score here, right side</div>
         <div id="rolling-dice">rolling dice images here, centered, event handler click</div> -->
-        <div id="player">player table at bottom</div>
+        <div id="player"><span id="player-rack">
+          <img id="1" src="assets/rolling-dice.gif">
+          <img id="2" src="assets/rolling-dice.gif">
+          <img id="3" src="assets/rolling-dice.gif">
+          <img id="4" src="assets/rolling-dice.gif">
+          <img id="5" src="assets/rolling-dice.gif">
+          <img id="6" src="assets/rolling-dice.gif">
+        </span></div>
       </div>
     </div>
   </body>
   <script src="js/constants.js" async defer></script>
   <script src="js/app.js" async defer></script>
+  <script src="js/eventhandler.js" async defer></script>
 </html>
