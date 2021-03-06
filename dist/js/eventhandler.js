@@ -4,6 +4,7 @@
 const boardRack = document.getElementById("board-rack");
 const playerRack = document.getElementById("player-rack");
 
+// may not need these, keeping on standby for now
 let dieOne = document.getElementById("1");
 let dieTwo = document.getElementById("2");
 let dieThree = document.getElementById("3");
@@ -15,7 +16,7 @@ let dieSix = document.getElementById("6");
 
 let rollDiceButton = document.getElementById("roll-dice-button");
 
-function handleClick(event) {
+function handleRollClick(event) {
   event.preventDefault();
 
   // TODO invoke method to roll dice for current player
@@ -34,4 +35,4 @@ function handleClick(event) {
   
 }
 
-rollDiceButton.addEventListener('click', handleClick);
+rollDiceButton.addEventListener('click', handleRollClick);
