@@ -76,19 +76,19 @@ var scoreTuples = [
  */
 function getScore(rollToCheck) {
   let score = 0;
-  let savedDiceString = '';
+  let savedDiceString;
   let remainingDiceString = rollToCheck.sort().toString();
   for (let i = 0; i < scoreTuples.length; i++) {
     if (remainingDiceString.includes(scoreTuples[i][0])) {
-      // Append to saved dice string
+      // Do Some Regex to remove score strings already counted, duplicate, leading, and trailing commas
       savedDiceString += `${scoreTuples[i][0]},`;
       // Remove score string that matches; use regex to remove duplicate, leading, and trailing commas
       remainingDiceString = remainingDiceString.replace(scoreTuples[i][0], '').replace(/,+/g,',').replace(/(^,)|(,$)/g, '');
       score += scoreTuples[i][1];
     }
   }
-  // Clean last comma from savedDiceString
-  savedDiceString = savedDiceString.replace(/(,$)/g, '');
+   // Clean last comma from savedDiceString
+   savedDiceString = savedDiceString.replace(/(,$)/g, '');
 
   var diceToStore = [];
   var diceToRollAgain = [];
@@ -120,6 +120,41 @@ function getScore(rollToCheck) {
   return {score: score, diceToRollAgain: diceToRollAgain, diceToScore: diceToStore}
 }
 
+let allDice =[];
+
+function Dice(name) {
+  this.name = name;
+  this.src = `assets/${name}.png`;
+
+}
+
+let retrievedDice = localStorage.getItem('dice');
+
+if(retrievedDice) {
+  let parsedDice = JSON.parse(retrievedDice);
+  allDice = parsedDice;
+} else {
+  new Dice('Dice_One');
+  new Dice('Dice_Two');
+  new Dice('Dice_Three');
+  new Dice('Dice_Four');
+  new Dice('Dice_Five');
+  new Dice()
+}
+
+function renderDice() {
+  // displayDiceToRoll = getScore.diceToRollAgain;
+  // displayDiceToStore = getScore.diceToStore;
+  let firstIndex = 
+  let secondIndex = 
+  let thirdIndex = 
+  let fourthIndex = 
+  let fifthIndex = 
+  let sixthIndex = 
+
+  imageOne.src
+
+}
 /***
  * Calculates an array of random number(s)
  * @param {number} numberOfRandoms A int of number of desired random e.g. `6`
@@ -161,3 +196,4 @@ console.log('Should Be 1300: ', getScore([4,4,4,4,4,1]));
 console.log('Should Be 2100: ', getScore([1,5,1,5,1,1]));
 var time2 = performance.now();
 console.log(`Time Elapsed: ${(time2 - time1) / 1000} seconds.`);
+
