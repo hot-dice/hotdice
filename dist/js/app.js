@@ -68,6 +68,49 @@ var scoreTuples = [
   ['1', 100],
   ['5', 50]
 ];
+const dice = JSON.parse(localStorage.getItem('Dice_List')) || [];
+
+/***
+ * Die Object Constructor Function
+ * @param {string} value
+ */
+function Die(value) {
+  this.value = value;
+  this.src = `assets/die-${value}.png`;
+  this.altText = `Die with value: ${value}`;
+  this.createDie();
+}
+
+Die.prototype.createDie = function() {
+  dice.push(this);
+  localStorage.setItem('Dice_List', JSON.stringify(dice));
+}
+
+function createDieImgElements(selectorToRenderIn = '#board-area ul', diceArray = dice) {
+  let renderLocation = document.querySelector(`${selectorToRenderIn}`);
+  console.log(renderLocation);
+  diceArray.forEach((die) => {
+    let listItem = document.createElement('li');
+    listItem.value = die.value;
+    let newDie = document.createElement('img');
+    newDie.src = die.src;
+    newDie.alt = die.altText;
+    newDie.classList += 'die'
+    listItem.appendChild(newDie);
+    renderLocation.appendChild(listItem);
+  });
+}
+
+createDieImgElements()
+// Init Our Die Objects - Temporary for now
+if (localStorage.getItem('Dice_List') === null) {
+  new Die(1);
+  new Die(2);
+  new Die(3);
+  new Die(4);
+  new Die(5);
+  new Die(6);
+}
 
 /***
  * Calculates score, remaining dice, and scored dice
