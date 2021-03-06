@@ -45,6 +45,11 @@ body {
   padding: 5%;
 }
 
+.hot-dice {
+  justify-items: center;
+  align-items: center;
+}
+
 #dice-hold-area ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));

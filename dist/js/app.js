@@ -1,16 +1,20 @@
 'use strict';
-
+// Globals
 const players = []; // JSON.parse(localStorage.getItem('Player_List')) || [];
 const dice = []; //JSON.parse(localStorage.getItem('Dice_List')) || [];
 
+// Global Selectors
+let gameBoard = document.querySelector('#board-area ul');
+let holdArea = document.querySelector('#dice-hold-area ul');
+let roundScore = document.querySelector('#round-score');
 /***
  * InitGame
  */
- function Game() {
+function Game() {
   this.gameActive = true;
   this.activePlayer;
   this.newGame();
-}
+};
 
 Game.prototype.newGame = function() {
 // Init Our Player Objects - Temporary for now
@@ -18,18 +22,7 @@ Game.prototype.newGame = function() {
     new Player('Test00');
     new Player('Test01');
   }
-
-  // Init Our Die Objects - Temporary for now
-  // if (localStorage.getItem('Dice_List') === null) {
-  //   new Dice(1);
-  //   new Dice(2);
-  //   new Dice(3);
-  //   new Dice(4);
-  //   new Dice(5);
-  //   new Dice(3);
-  // }
-  // renderDieImgElements()
-}
+};
 
 /***
  * Die Object Constructor Function
@@ -40,12 +33,12 @@ function Dice(value) {
   this.src = `assets/die-${value}.png`;
   this.altText = `Die with value: ${value}`;
   this.createDie();
-}
+};
 
 Dice.prototype.createDie = function() {
   dice.push(this);
   localStorage.setItem('Dice_List', JSON.stringify(dice));
-}
+};
 
 // Global Functions
 function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-area ul') {
@@ -65,12 +58,11 @@ function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-are
     listItem.appendChild(newDie);
     renderLocation.appendChild(listItem);
   });
-}
+};
 
 function renderRoundScore(score) {
-  let renderLocation = document.querySelector(`#round-score`);
-  renderLocation.textContent = score;
-}
+  roundScore.textContent = score;
+};
 
 function convertToDiceArrayOfObjects(inputArray) { // [1,2,3,4]
   const objectArray = [];
@@ -82,7 +74,7 @@ function convertToDiceArrayOfObjects(inputArray) { // [1,2,3,4]
     objectArray.push(tempObject);
   });
   return objectArray;
-}
+};
 
 /***
  * Player Object Constructor Function
@@ -96,7 +88,7 @@ function Player(playerName) {
   this.diceHeld = [];
   this.diceRolled = [];
   this.createPlayer();
-}
+};
 
 // Player ProtoTypes
 // Add round score to total and reset player round state
@@ -106,44 +98,54 @@ Player.prototype.addRoundScoreToTotal = function() {
   this.diceHeld = [];
   this.diceRolled = [];
   this.saveState();
-}
+};
 
 // Hold dice that are valid to hold and passed to this function
 Player.prototype.holdDice = function(dice) {
   let tempDice = getScore(dice);
-  console.log(tempDice);
   this.diceHeld.push.apply(this.diceHeld, tempDice.diceToScore);
   this.roundScore += tempDice.score;
   this.diceRolled = dice.filter(die => !this.diceHeld.includes(die));
   this.saveState();
   renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
-  if (this.diceHeld.length < 6) {
+  if (this.diceHeld.length < 7) {
     renderDieImgElements(convertToDiceArrayOfObjects(this.diceHeld), '#dice-hold-area ul');
   } else {
-    this.diceHeld = [];
-    let holdArea = document.querySelector(`#dice-hold-area ul`);
     while (holdArea.lastChild) { 
       holdArea.removeChild(holdArea.lastChild);
     }
   }
+  if (this.diceHeld.length === 6) { // HOT DICE!!!
+    this.diceHeld = [];
+    let hotDice = document.createElement('img');
+    hotDice.src = 'assets/gear50x50.png'
+    hotDice.altText = 'You Have Hot Dice Roll Again or Stay'
+    hotDice.class += 'hot-dice';
+    gameBoard.append(hotDice);
+  }
   
   renderRoundScore(this.roundScore);
   return this.diceHeld;
-}
+};
 
 // Roll those dice
 Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
   this.diceRolled = getRandom(numberOfDiceToRoll);
   renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
+  if (this.diceHeld.length === 0) {
+    while (holdArea.lastChild) { 
+      holdArea.removeChild(holdArea.lastChild);
+    }
+  }
   this.saveState();
   return this.diceRolled;
-}
+};
 
 // Create player objects and push to players and save to localStorage
 Player.prototype.createPlayer = function() {
   players.push(this);
   localStorage.setItem('Player_List', JSON.stringify(players));
-}
+};
 
 // Update the correct player object
 Player.prototype.saveState = function() {
@@ -156,7 +158,7 @@ Player.prototype.saveState = function() {
     }
   }
   localStorage.setItem('Player_List', JSON.stringify(players));
-}
+};
 
 // TODO maybe consolidate this into something else
 Player.prototype.clearRoundScore = function() {
@@ -212,7 +214,7 @@ function getScore(rollToCheck) {
   // Return Score, Dice Eligible To Roll Again And Dice To Store As An Object
   // return [score, diceToRollAgain, diceToStore]; // Slightly faster and more consistent with objects
   return {score: score, diceToRollAgain: diceToRollAgain, diceToScore: diceToStore}
-}
+};
 
 /***
  * Calculates an array of random number(s)
@@ -230,7 +232,7 @@ function getRandom(numberOfRandoms, min = 1, max = 6) {
     randomNumberArray.push(Math.floor(randomFloat * (max - min + 1)) + min);
   }
   return randomNumberArray;
-}
+};
 
 /***
  * Creates a random UUID
@@ -240,7 +242,7 @@ function getRandom(numberOfRandoms, min = 1, max = 6) {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ (window.crypto || window.msCrypto).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
-}
+};
 
 // Test Cases for getScore
 var time1 = performance.now();
