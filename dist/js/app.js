@@ -86,16 +86,19 @@ if (localStorage.getItem('Player_List') === null) {
  */
 function getScore(rollToCheck) {
   let score = 0;
-  let savedDiceString;
+  let savedDiceString = '';
   let remainingDiceString = rollToCheck.sort().toString();
   for (let i = 0; i < scoreTuples.length; i++) {
     if (remainingDiceString.includes(scoreTuples[i][0])) {
-      // Do Some Regex to remove score strings already counted, duplicate, leading, and trailing commas
-      savedDiceString = scoreTuples[i][0];
+      // Append to saved dice string
+      savedDiceString += `${scoreTuples[i][0]},`;
+      // Remove score string that matches; use regex to remove duplicate, leading, and trailing commas
       remainingDiceString = remainingDiceString.replace(scoreTuples[i][0], '').replace(/,+/g,',').replace(/(^,)|(,$)/g, '');
       score += scoreTuples[i][1];
     }
   }
+  // Clean last comma from savedDiceString
+  savedDiceString = savedDiceString.replace(/(,$)/g, '');
 
   var diceToStore = [];
   var diceToRollAgain = [];
