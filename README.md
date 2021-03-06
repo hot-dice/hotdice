@@ -47,3 +47,9 @@ Run locally with the following command; file changes are automatically tracked.
 [Crypto.getRandomValues()](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues)
 
 [Use crypto.getRandomValues for new seeds](https://github.com/chancejs/chancejs/issues/232#issuecomment-182500222)
+
+[How to remove an item from an Array in JavaScript](https://flaviocopes.com/how-to-remove-item-from-array/)
+
+[UUID Generator](https://gist.github.com/jed/982883)
+
+[Generating UUID's in Vanilla JavaScript](https://stackoverflow.com/a/2117523/7967484)
