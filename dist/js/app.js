@@ -275,36 +275,37 @@ function getRandom(numberOfRandoms, min = 1, max = 6) {
  * Creates a random UUID
  * @returns {string} A cryptographically secure UUID
  */
- function uuidv4() {
+function uuidv4() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ (window.crypto || window.msCrypto).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
 };
 
-// Test Cases for getScore
-var time1 = performance.now();
-console.log('Should Be 4000: ', getScore([1,1,1,1,1,1]));
-console.log('Should Be 300: ', getScore([3,2,3,4,2,3]));
-console.log('Should Be 300: ', getScore([1,1,5,5]));
-console.log('Should Be 50: ', getScore([4,4,2,3,5,6]));
-console.log('Should Be 250: ', getScore([4,3,1,1,5]));
-console.log('Should Be 450: ', getScore([4,4,4,5]));
-console.log('Should Be 400: ', getScore([4,4,4]));
-console.log('Should Be 0: ', getScore([4,4]));
-console.log('Should Be 50: ', getScore([5]));
-console.log('Should Be 50: ', getScore([5,4]));
-console.log('Should Be 100: ', getScore([5,5]));
-console.log('Should Be 200: ', getScore([1,1]));
-console.log('Should Be 200: ', getScore([1,1,2,3,4,6]));
-console.log('Should Be 150: ', getScore([1,5]));
-console.log('Should Be 150: ', getScore([3,1,5,4]));
-console.log('Should Be 1200: ', getScore([4,4,4,4,4]));
-console.log('Should Be 1300: ', getScore([4,4,4,4,4,1]));
-console.log('Should Be 2100: ', getScore([1,5,1,5,1,1]));
-var time2 = performance.now();
-console.log(`Time Elapsed: ${(time2 - time1) / 1000} seconds.`);
-
 new Game;
+
+// // Test Cases for getScore
+// var time1 = performance.now();
+// console.log('Should Be 4000: ', getScore([1,1,1,1,1,1]));
+// console.log('Should Be 300: ', getScore([3,2,3,4,2,3]));
+// console.log('Should Be 300: ', getScore([1,1,5,5]));
+// console.log('Should Be 50: ', getScore([4,4,2,3,5,6]));
+// console.log('Should Be 250: ', getScore([4,3,1,1,5]));
+// console.log('Should Be 450: ', getScore([4,4,4,5]));
+// console.log('Should Be 400: ', getScore([4,4,4]));
+// console.log('Should Be 0: ', getScore([4,4]));
+// console.log('Should Be 50: ', getScore([5]));
+// console.log('Should Be 50: ', getScore([5,4]));
+// console.log('Should Be 100: ', getScore([5,5]));
+// console.log('Should Be 200: ', getScore([1,1]));
+// console.log('Should Be 200: ', getScore([1,1,2,3,4,6]));
+// console.log('Should Be 150: ', getScore([1,5]));
+// console.log('Should Be 150: ', getScore([3,1,5,4]));
+// console.log('Should Be 1200: ', getScore([4,4,4,4,4]));
+// console.log('Should Be 1300: ', getScore([4,4,4,4,4,1]));
+// console.log('Should Be 2100: ', getScore([1,5,1,5,1,1]));
+// var time2 = performance.now();
+// console.log(`Time Elapsed: ${(time2 - time1) / 1000} seconds.`);
+
 
 
 // Some code that wasn't used
