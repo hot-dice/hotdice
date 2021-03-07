@@ -11,8 +11,8 @@
   </head>
   <body>
     <div id="total-scores">
-      <p id="player-score">Player1 Score: </p> 
-      <p id="CPU-score">Player2 Score: </p> 
+      <p id="player1-score"></p> 
+      <p id="player2-score"></p> 
       <img id="gear" src="assets/gear50x50.png" alt="settings icon">
     </div>
     <div id="round-score"></div>
@@ -23,8 +23,8 @@
       <ul></ul>
     </div>
     <div id="actions">
-      <button onclick="players[0].rollDice()">Roll Dice</button>
-      <button onclick="players[0].holdDice(players[0].diceRolled)">Stay</button>
+      <button onclick="game.activePlayer.rollDice()">Roll Dice</button>
+      <button onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
     </div>
   </body>
   <script src="js/constants.js" async defer></script>
