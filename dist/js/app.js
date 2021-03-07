@@ -7,7 +7,7 @@ const players = JSON.parse(localStorage.getItem('Player_List')) || [];
  */
 function Game() {
   this.gameActive = true;
-  this.activePlayer
+  this.activePlayer;
 }
 
 /***
@@ -32,7 +32,7 @@ Player.prototype.addRoundScoreToTotal = function() {
   this.diceHeld = [];
   this.diceRolled = [];
   this.saveState();
-}
+};
 
 // Hold dice that are valid to hold and passed to this function
 Player.prototype.holdDice = function(dice) {
@@ -42,18 +42,18 @@ Player.prototype.holdDice = function(dice) {
   this.roundScore += tempDice.score;
   this.diceRolled = dice.filter(die => !this.diceHeld.includes(die));
   this.saveState();
-}
+};
 
 // Roll those dice
 Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
   this.diceRolled = getRandom(numberOfDiceToRoll);
-}
+};
 
 // Create player objects and push to players and save to localStorage
 Player.prototype.createPlayer = function() {
   players.push(this);
   localStorage.setItem('Player_List', JSON.stringify(players));
-}
+};
 
 // Update the correct player object
 Player.prototype.saveState = function() {
@@ -66,7 +66,7 @@ Player.prototype.saveState = function() {
     }
   }
   localStorage.setItem('Player_List', JSON.stringify(players));
-}
+};
 
 // TODO maybe consolidate this into something else
 Player.prototype.clearRoundScore = function() {
@@ -152,7 +152,7 @@ function getRandom(numberOfRandoms, min = 1, max = 6) {
  * Creates a random UUID
  * @returns {string} A cryptographically secure UUID
  */
- function uuidv4() {
+function uuidv4() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ (window.crypto || window.msCrypto).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
