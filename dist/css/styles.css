@@ -2,7 +2,7 @@ body {
   min-height: 100vh;
   min-height: calc(var(--vh, 1vh) * 100); /* iOS Chrome  Fix */
   display: grid;
-  grid-template-rows: 50px 25px auto 15% 15%;
+  grid-template-rows: minmax(50px, 10%) minmax(25px,5%) minmax(45%, auto) minmax(25px, 15%) minmax(20px, 15%);
   grid-template-columns: 1fr;
   grid-template-areas: 
     'total-score'
@@ -15,14 +15,25 @@ body {
 #total-scores {
   display: grid;
   grid-area: total-score;
-  grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+  grid-template-columns: minmax(75px, 1fr) minmax(75px, 1fr) auto;
   grid-template-rows: 1fr;
   background-color: grey; /* remove later */
+  font-size: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+#total-scores div {
+  justify-self: center;
 }
 
 #gear {
   justify-self: end;
+  width: auto; 
+  height: 100%;
 }
+
+
 
 #round-score {
   display: grid;
@@ -30,6 +41,7 @@ body {
   justify-content: center;
   align-items: center;
   border-top: solid;
+  font-size: 1.5rem;
 }
 
 .bold {
@@ -96,19 +108,42 @@ li[selected='true'] {
   display: grid;
   grid-area: actions;
   grid-template-columns: 1fr 1fr;
+  background-color: grey;
 }
 
 #actions button{
   margin: .75rem;
   border-radius: 15px;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#actions button:hover, #board-area .die, #gear {
+  cursor: pointer;
+}
+
+/* Horizontal Mobile Media Query */
+@media (max-width: 820px) and (max-height: 420px) {
+  .die {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  #dice-hold-area ul .die {
+    width: 2rem;
+    height: 2rem;
+  }  
 }
 
 /* Desktop Media Query */
-@media (min-width: 520px) {
+@media (min-width: 420px) and (min-height: 420px) {
   .die {
     width: 6rem;
     height: 6rem;
+  }
+  #dice-hold-area ul .die {
+    width: 4rem;
+    height: 4rem;
   }
 }
 
@@ -116,5 +151,10 @@ li[selected='true'] {
   .die {
     width: 8rem;
     height: 8rem;
+  }
+
+  #dice-hold-area ul .die {
+    width: 5.2rem;
+    height: 5.2rem;
   }
 }

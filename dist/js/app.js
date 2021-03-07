@@ -7,8 +7,12 @@ var game;
 const gameBoardElement = document.querySelector('#board-area ul');
 const holdAreaElement = document.querySelector('#dice-hold-area ul');
 const roundScoreElement = document.querySelector('#round-score');
-const player1score = document.querySelector('#player1-score');
-const player2score = document.querySelector('#player2-score');
+const player1area = document.querySelector('#player1-score');
+const player2area = document.querySelector('#player2-score');
+const player1name = document.querySelector('#player1-score span');
+const player1score = document.querySelector('#player1-score p');
+const player2name = document.querySelector('#player2-score span');
+const player2score = document.querySelector('#player2-score p');
 var rollingDice = document.querySelectorAll('#board-area .die');
 
 // Retrieve From localStorage
@@ -48,6 +52,8 @@ Game.prototype.newGame = function() {
   }
   game = this;
   localStorage.setItem('Game', JSON.stringify(game));
+  player1name.textContent = `${players[0].name}`;
+  player2name.textContent = `${players[1].name}`;
 }
 
 // See who's turn it is
@@ -57,22 +63,22 @@ Game.prototype.checkState = function() {
       this.activePlayer = players[0];
       players[0].isTurn = true;
       players[1].isTurn = false;
-      player1score.classList = 'bold';
-      player2score.classList = '';
+      player1area.classList = 'bold';
+      player2area.classList = '';
     } else {
       this.activePlayer = players[1];
       players[0].isTurn = false;
       players[1].isTurn = true;
-      player1score.classList = '';
-      player2score.classList = 'bold';
+      player1area.classList = '';
+      player2area.classList = 'bold';
     }
     players.forEach(player => {
       if(player.totalScore >= 10000) {
         this.gameActive = false;
       }
     });
-    player1score.textContent = +players[0].totalScore;
-    player2score.textContent = +players[1].totalScore;
+    player1score.textContent = `${+players[0].totalScore}`;
+    player2score.textContent = `${+players[1].totalScore}`;
   } else {
     console.log('Game Has Ended')
   }
@@ -225,6 +231,11 @@ function clearBoard(){
 
 function renderRoundScore(score) {
   roundScoreElement.textContent = score;
+  // if(!game.activePlayer) {
+  //   roundScoreElement.textContent = `${players[0].name}: ${score}`;
+  // } else {
+  //   roundScoreElement.textContent = `${game.activePlayer.name}:  ${score}`;
+  // }
 };
 
 function convertToDiceArrayOfObjects(inputArray) { // [1,2,3,4]
