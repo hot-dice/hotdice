@@ -51,7 +51,6 @@ function handleDiceClick(event) {
   let diceClicked = event.target.getAttribute("id");
   let die = document.getElementById(diceClicked);
     
-  // TODO highlight dice clicked and save to temp array to pass to diceHeld once confirmed.
   console.log(die);
   if (die.alt === 'unselected') {
     die.style = 'opacity: 1';
@@ -59,15 +58,21 @@ function handleDiceClick(event) {
   } else {
     die.style = 'opacity: 0.7';
     die.alt = 'unselected';
-  }
-
-  // 
-  
-  
-  
-  
+  }  
   
 }
+
+// will use this function for event actions hold or roll
+function passSelectedDice() {
+  let tempArray = [];
+
+  for (let i = 1; i < 6+1; i++) {
+    if (document.getElementById(i).alt === 'selected') {
+      tempArray.push(parseInt(document.getElementById(i).id)); 
+    }
+  }
+  return tempArray;
+} 
 
 
 rollingDice.addEventListener('click', handleDiceClick);
