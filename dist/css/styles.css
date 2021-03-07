@@ -29,7 +29,7 @@ body {
   grid-area: 'round-score';
   justify-content: center;
   align-items: center;
-  border-bottom: solid;
+  border-top: solid;
 }
 
 .bold {
