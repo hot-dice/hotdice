@@ -231,11 +231,6 @@ function clearBoard(){
 
 function renderRoundScore(score) {
   roundScoreElement.textContent = score;
-  // if(!game.activePlayer) {
-  //   roundScoreElement.textContent = `${players[0].name}: ${score}`;
-  // } else {
-  //   roundScoreElement.textContent = `${game.activePlayer.name}:  ${score}`;
-  // }
 };
 
 function convertToDiceArrayOfObjects(inputArray) { // [1,2,3,4]
@@ -357,59 +352,3 @@ document.body.addEventListener('click', handleDiceClick);
 
 // Init Game
 new Game;
-
-// // Test Cases for getScore
-// var time1 = performance.now();
-// console.log('Should Be 4000: ', getScore([1,1,1,1,1,1]));
-// console.log('Should Be 300: ', getScore([3,2,3,4,2,3]));
-// console.log('Should Be 300: ', getScore([1,1,5,5]));
-// console.log('Should Be 50: ', getScore([4,4,2,3,5,6]));
-// console.log('Should Be 250: ', getScore([4,3,1,1,5]));
-// console.log('Should Be 450: ', getScore([4,4,4,5]));
-// console.log('Should Be 400: ', getScore([4,4,4]));
-// console.log('Should Be 0: ', getScore([4,4]));
-// console.log('Should Be 50: ', getScore([5]));
-// console.log('Should Be 50: ', getScore([5,4]));
-// console.log('Should Be 100: ', getScore([5,5]));
-// console.log('Should Be 200: ', getScore([1,1]));
-// console.log('Should Be 200: ', getScore([1,1,2,3,4,6]));
-// console.log('Should Be 150: ', getScore([1,5]));
-// console.log('Should Be 150: ', getScore([3,1,5,4]));
-// console.log('Should Be 1200: ', getScore([4,4,4,4,4]));
-// console.log('Should Be 1300: ', getScore([4,4,4,4,4,1]));
-// console.log('Should Be 2100: ', getScore([1,5,1,5,1,1]));
-// var time2 = performance.now();
-// console.log(`Time Elapsed: ${(time2 - time1) / 1000} seconds.`);
-
-
-
-// Some code that wasn't used
-// while (this.gameActive) {
-//   console.log(this.gameActive);
-//   // Make the player move.
-//   // Take player movement 
-//   players.forEach((player, index) => {
-//     if(player.isTurn && player.isBusted || player.isHeld) {
-//       player.isTurn = false;
-//       players[index + 1].isTurn = true;
-//       this.activePlayer = players[index + 1];
-//     }
-//   });
-//   // Check if the game is over.
-//   players.forEach(player => {
-//     if(player.totalScore >= 10000) {
-//       this.gameActive = false;
-//     }
-//   });
-// }
-// };
-
-// while (game.isActive) {
-//   players.forEach(player => {
-//     console.log(player.totalScore);
-//     if(player.totalScore >= 1000) {
-//       game[0].gameActive = false;
-//       localStorage.setItem('Game', JSON.stringify(game));
-//     }
-//   });
-// }
