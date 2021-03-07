@@ -55,7 +55,7 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   justify-items: center;
   align-items: center;
-  gap: 2%;
+  gap: 1%;
 }
 
 #dice-hold-area ul .die {
@@ -80,7 +80,7 @@ body {
 #actions {
   display: grid;
   grid-area: actions;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 #actions button{

@@ -1,12 +1,27 @@
 'use strict';
 // Globals
-const players = []; // JSON.parse(localStorage.getItem('Player_List')) || [];
-const dice = []; //JSON.parse(localStorage.getItem('Dice_List')) || [];
+const players = [];
+const game = [];
 
 // Global Selectors
 let gameBoard = document.querySelector('#board-area ul');
 let holdArea = document.querySelector('#dice-hold-area ul');
 let roundScore = document.querySelector('#round-score');
+
+// Retrieve From localStorage
+const retrievedPlayers = JSON.parse(localStorage.getItem('Player_List'));
+if (retrievedPlayers) {
+  retrievedPlayers.forEach(item => {
+    new Player(item.name, item.isTurn, item.id, item.totalScore, item.roundScore, item.diceHeld, item.diceRolled, item.isBusted, item.isHeld);
+    if(item.isTurn) {
+      renderDieImgElements(convertToDiceArrayOfObjects(item.diceHeld), '#dice-hold-area ul');
+      renderDieImgElements(convertToDiceArrayOfObjects(item.diceRolled), '#board-area ul');
+      renderRoundScore(item.roundScore);
+    }
+  });
+}
+
+
 /***
  * InitGame
  */
@@ -17,27 +32,145 @@ function Game() {
 };
 
 Game.prototype.newGame = function() {
-// Init Our Player Objects - Temporary for now
   if (localStorage.getItem('Player_List') === null) {
-    new Player('Test00');
+    new Player('Test00', true);
     new Player('Test01');
   }
+  // See who's active turn it is
+  players.forEach(player => {
+    if(player.isTurn === true) {
+      this.activePlayer = player.id;
+    }
+  });
+
+  game.push(this);
+  localStorage.setItem('Game', JSON.stringify(game));
+  // Set active player to an instance of player
+  // while (this.gameActive) {
+  //   console.log(this.gameActive);
+  //   // Make the player move.
+  //   // Take player movement 
+  //   players.forEach((player, index) => {
+  //     if(player.isTurn && player.isBusted || player.isHeld) {
+  //       player.isTurn = false;
+  //       players[index + 1].isTurn = true;
+  //       this.activePlayer = players[index + 1];
+  //     }
+  //   });
+  //   // Check if the game is over.
+  //   players.forEach(player => {
+  //     if(player.totalScore >= 10000) {
+  //       this.gameActive = false;
+  //     }
+  //   });
+  // }
 };
+
+// while (game.isActive) {
+//   players.forEach(player => {
+//     console.log(player.totalScore);
+//     if(player.totalScore >= 1000) {
+//       game[0].gameActive = false;
+//       localStorage.setItem('Game', JSON.stringify(game));
+//     }
+//   });
+// }
 
 /***
- * Die Object Constructor Function
- * @param {string} value
+ * Player Object Constructor Function
+ * @param {string} playerName
  */
-function Dice(value) {
-  this.value = value;
-  this.src = `assets/die-${value}.png`;
-  this.altText = `Die with value: ${value}`;
-  this.createDie();
+function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, roundScore = 0, diceHeld = [], diceRolled = [], isBusted = false, isHeld = false) {
+  this.name = playerName;
+  this.id = id;
+  this.totalScore = totalScore;
+  this.roundScore = roundScore;
+  this.diceHeld = diceHeld;
+  this.diceRolled = diceRolled;
+  this.isTurn = isTurn;
+  this.isBusted = isBusted;
+  this.isHeld = isHeld;
+  // Create player objects and push to players and save to localStorage
+  players.push(this);
+  localStorage.setItem('Player_List', JSON.stringify(players));
 };
 
-Dice.prototype.createDie = function() {
-  dice.push(this);
-  localStorage.setItem('Dice_List', JSON.stringify(dice));
+// Player ProtoTypes
+// Add round score to total and reset player round state
+Player.prototype.addRoundScoreToTotal = function() {
+  this.totalScore += roundScore;
+  this.roundScore = 0;
+  this.diceHeld = [];
+  this.diceRolled = [];
+  this.saveState();
+};
+
+// Hold dice that are valid to hold and passed to this function
+Player.prototype.holdDice = function(dice) {
+  let tempDice = getScore(dice);
+  this.diceHeld.push.apply(this.diceHeld, tempDice.diceToScore);
+  this.roundScore += tempDice.score;
+  this.diceRolled = dice.filter(die => !this.diceHeld.includes(die));
+  renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
+  if (this.diceHeld.length < 7) {
+    renderDieImgElements(convertToDiceArrayOfObjects(this.diceHeld), '#dice-hold-area ul');
+  } else {
+    while (holdArea.lastChild) { 
+      holdArea.removeChild(holdArea.lastChild);
+    }
+  }
+  if (this.diceHeld.length >= 6) { // HOT DICE!!!
+    this.diceHeld = [];
+    let hotDice = document.createElement('img');
+    hotDice.src = 'assets/gear50x50.png'
+    hotDice.altText = 'You Have Hot Dice Roll Again or Stay'
+    hotDice.class += 'hot-dice';
+    gameBoard.append(hotDice);
+  }
+  this.isHeld = true;
+  renderRoundScore(this.roundScore);
+  this.saveState();
+  return this.diceHeld;
+};
+
+// Roll those dice
+Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
+  let bust = false;
+  this.diceRolled = getRandom(numberOfDiceToRoll);
+  renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
+  let bustCheck = getScore(this.diceRolled);
+  if (bustCheck.score === 0 && bustCheck.diceToRollAgain.length === 0 && bustCheck.diceToScore.length === 0) {
+    this.isBusted = true;
+    bust = true;
+  }
+  if (this.diceHeld.length === 0) {
+    while (holdArea.lastChild) { 
+      holdArea.removeChild(holdArea.lastChild);
+    }
+  }
+  if(bust){
+    console.log('BUSTED!!!')
+  }
+  this.saveState();
+  return this.diceRolled;
+};
+
+// Update the correct player object
+Player.prototype.saveState = function() {
+  if(players.length) {
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].id === this.id) {
+        players[i] = this;
+        break;
+      }
+    }
+  }
+  localStorage.setItem('Player_List', JSON.stringify(players));
+};
+
+// TODO maybe consolidate this into something else
+Player.prototype.clearRoundScore = function() {
+  this.roundScore = 0;
 };
 
 // Global Functions
@@ -76,94 +209,6 @@ function convertToDiceArrayOfObjects(inputArray) { // [1,2,3,4]
   return objectArray;
 };
 
-/***
- * Player Object Constructor Function
- * @param {string} playerName
- */
-function Player(playerName) {
-  this.name = playerName;
-  this.id = uuidv4();
-  this.totalScore = 0;
-  this.roundScore = 0;
-  this.diceHeld = [];
-  this.diceRolled = [];
-  this.createPlayer();
-};
-
-// Player ProtoTypes
-// Add round score to total and reset player round state
-Player.prototype.addRoundScoreToTotal = function() {
-  this.totalScore += roundScore;
-  this.roundScore = 0;
-  this.diceHeld = [];
-  this.diceRolled = [];
-  this.saveState();
-};
-
-// Hold dice that are valid to hold and passed to this function
-Player.prototype.holdDice = function(dice) {
-  let tempDice = getScore(dice);
-  this.diceHeld.push.apply(this.diceHeld, tempDice.diceToScore);
-  this.roundScore += tempDice.score;
-  this.diceRolled = dice.filter(die => !this.diceHeld.includes(die));
-  this.saveState();
-  renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
-  if (this.diceHeld.length < 7) {
-    renderDieImgElements(convertToDiceArrayOfObjects(this.diceHeld), '#dice-hold-area ul');
-  } else {
-    while (holdArea.lastChild) { 
-      holdArea.removeChild(holdArea.lastChild);
-    }
-  }
-  if (this.diceHeld.length === 6) { // HOT DICE!!!
-    this.diceHeld = [];
-    let hotDice = document.createElement('img');
-    hotDice.src = 'assets/gear50x50.png'
-    hotDice.altText = 'You Have Hot Dice Roll Again or Stay'
-    hotDice.class += 'hot-dice';
-    gameBoard.append(hotDice);
-  }
-  
-  renderRoundScore(this.roundScore);
-  return this.diceHeld;
-};
-
-// Roll those dice
-Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
-  this.diceRolled = getRandom(numberOfDiceToRoll);
-  renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
-  if (this.diceHeld.length === 0) {
-    while (holdArea.lastChild) { 
-      holdArea.removeChild(holdArea.lastChild);
-    }
-  }
-  this.saveState();
-  return this.diceRolled;
-};
-
-// Create player objects and push to players and save to localStorage
-Player.prototype.createPlayer = function() {
-  players.push(this);
-  localStorage.setItem('Player_List', JSON.stringify(players));
-};
-
-// Update the correct player object
-Player.prototype.saveState = function() {
-  if(players.length) {
-    for (let i = 0; i < players.length; i++) {
-      if (players[i].id === this.id) {
-        players[i] = this;
-        break;
-      }
-    }
-  }
-  localStorage.setItem('Player_List', JSON.stringify(players));
-};
-
-// TODO maybe consolidate this into something else
-Player.prototype.clearRoundScore = function() {
-  this.roundScore = 0;
-};
 
 /***
  * Calculates score, remaining dice, and scored dice
