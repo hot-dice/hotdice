@@ -10,7 +10,28 @@
     <link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
-    <a href="board.html">Game Board</a> 
+    <div id="total-scores">
+      <div id="player1-score">
+        <span></span>
+        <p></p>
+      </div>
+      <div id="player2-score">
+        <span></span>
+        <p></p>
+      </div>
+      <img id="gear" src="assets/settings-gear.svg" alt="settings icon">
+    </div>
+    <div id="round-score"></div>
+    <div id="board-area">
+      <ul></ul>
+    </div>
+    <div id="dice-hold-area">
+      <ul></ul>
+    </div>
+    <div id="actions">
+      <button onclick="game.activePlayer.rollDice()">Roll Dice</button>
+      <button onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
+    </div>
   </body>
   <script src="js/constants.js" async defer></script>
   <script src="js/app.js" async defer></script>
