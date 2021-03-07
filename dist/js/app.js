@@ -7,6 +7,8 @@ var game;
 const gameBoardElement = document.querySelector('#board-area ul');
 const holdAreaElement = document.querySelector('#dice-hold-area ul');
 const roundScoreElement = document.querySelector('#round-score');
+const player1score = document.querySelector('#player1-score');
+const player2score = document.querySelector('#player2-score');
 var rollingDice = document.querySelectorAll('#board-area .die');
 
 // Retrieve From localStorage
@@ -117,9 +119,8 @@ Player.prototype.holdDice = function(dice) {
 Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
   let diceOnTable = document.querySelectorAll('.die');
   let dice = passSelectedDice();
-  console.log(dice);
+  let tempDice = getScore(dice);
   if (dice.length || diceOnTable.length !== 0) {
-    let tempDice = getScore(dice);
     this.roundScore += tempDice.score;
     renderRoundScore(this.roundScore);
     console.log('tempDice: ', tempDice)
@@ -206,6 +207,7 @@ function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-are
   });
 };
 
+// Global Functions
 function clearBoard(){
   while (holdAreaElement.lastChild) { 
     holdAreaElement.removeChild(holdAreaElement.lastChild);
@@ -311,8 +313,15 @@ function uuidv4() {
   );
 };
 
-// Init Game
-new Game;
+// Get Selected Dice Form DOM
+function passSelectedDice() {
+  let tempArray = [];
+  let selected = document.querySelectorAll("li[selected='true']");
+  selected.forEach(item => {
+    tempArray.push(+item.value);
+  });
+  return tempArray;
+} 
 
 // Event Handler
 function handleDiceClick(event) {
@@ -329,15 +338,8 @@ function handleDiceClick(event) {
 // Attach Event Handler
 document.body.addEventListener('click', handleDiceClick);
 
-// will use this function for event actions hold or roll
-function passSelectedDice() {
-  let tempArray = [];
-  let selected = document.querySelectorAll("li[selected='true']");
-  selected.forEach(item => {
-    tempArray.push(+item.value);
-  });
-  return tempArray;
-} 
+// Init Game
+new Game;
 
 // // Test Cases for getScore
 // var time1 = performance.now();
