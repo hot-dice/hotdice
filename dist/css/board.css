@@ -60,6 +60,11 @@ body {
   justify-content: center;
 }
 
+#board-rack {
+  margin-top: 2%;
+  padding-top: 2%;
+}
+
 #player {
   background-image: url("../assets/mahogany.jpg");
   background-repeat: no-repeat;
@@ -80,6 +85,7 @@ span {
 span img {
   width: 64px;
   height: auto;
+  opacity: 0.7;
     
 }
 

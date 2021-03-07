@@ -36,3 +36,38 @@ function handleRollClick(event) {
 }
 
 rollDiceButton.addEventListener('click', handleRollClick);
+
+
+
+//////////////////////////////////////////
+
+
+
+let rollingDice = document.getElementById("board-rack");
+
+function handleDiceClick(event) {
+  event.preventDefault();
+  
+  let diceClicked = event.target.getAttribute("id");
+  let die = document.getElementById(diceClicked);
+    
+  // TODO highlight dice clicked and save to temp array to pass to diceHeld once confirmed.
+  console.log(die);
+  if (die.alt === 'unselected') {
+    die.style = 'opacity: 1';
+    die.alt = 'selected';
+  } else {
+    die.style = 'opacity: 0.7';
+    die.alt = 'unselected';
+  }
+
+  // 
+  
+  
+  
+  
+  
+}
+
+
+rollingDice.addEventListener('click', handleDiceClick);
