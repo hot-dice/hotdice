@@ -77,6 +77,14 @@ body {
   height: 4rem;
 }
 
+li[selected='false'] {
+  opacity: 1
+}
+
+li[selected='true'] {
+  opacity: .7
+}
+
 #actions {
   display: grid;
   grid-area: actions;

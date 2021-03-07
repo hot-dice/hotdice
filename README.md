@@ -53,3 +53,7 @@ Run locally with the following command; file changes are automatically tracked.
 [UUID Generator](https://gist.github.com/jed/982883)
 
 [Generating UUID's in Vanilla JavaScript](https://stackoverflow.com/a/2117523/7967484)
+
+[Get the index of the li clicked in javascript](https://stackoverflow.com/a/48977708/7967484)
+
+[Setting Custom Attributes in JavaScript](https://stackoverflow.com/a/7230951/7967484)

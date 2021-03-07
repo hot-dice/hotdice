@@ -7,6 +7,7 @@ var game;
 const gameBoardElement = document.querySelector('#board-area ul');
 const holdAreaElement = document.querySelector('#dice-hold-area ul');
 const roundScoreElement = document.querySelector('#round-score');
+var rollingDice = document.querySelectorAll('#board-area .die');
 
 // Retrieve From localStorage
 const retrievedPlayers = JSON.parse(localStorage.getItem('Player_List'));
@@ -38,6 +39,7 @@ Game.prototype.saveState = function() {
 }
 
 Game.prototype.newGame = function() {
+  // TODO: ADD Modal TO have players select 1 or 2 player - If 1 player make a computer player else have to entires for names
   if (localStorage.getItem('Player_List') === null) {
     new Player('Test00', true);
     new Player('Test01');
@@ -98,26 +100,11 @@ Player.prototype.addRoundScoreToTotal = function() {
 // Hold dice that are valid to hold and passed to this function
 Player.prototype.holdDice = function(dice) {
   let tempDice = getScore(dice);
-  this.diceHeld.push.apply(this.diceHeld, tempDice.diceToScore);
   this.roundScore += tempDice.score;
-  this.diceRolled = dice.filter(die => !this.diceHeld.includes(die));
-  renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
-  if (this.diceHeld.length < 7) {
-    renderDieImgElements(convertToDiceArrayOfObjects(this.diceHeld), '#dice-hold-area ul');
-  } else {
-    while (holdAreaElement.lastChild) { 
-      holdAreaElement.removeChild(holdAreaElement.lastChild);
-    }
-  }
-  if (this.diceHeld.length >= 6) { // HOT DICE!!!
-    this.diceHeld = [];
-    let hotDice = document.createElement('img');
-    hotDice.src = 'assets/gear50x50.png'
-    hotDice.altText = 'You Have Hot Dice Roll Again or Stay'
-    hotDice.class += 'hot-dice';
-    gameBoardElement.append(hotDice);
-  }
-  renderRoundScore(this.roundScore);
+  this.diceHeld = [];
+  this.diceRolled = [];
+  clearBoard();
+  renderRoundScore(0);
   this.addRoundScoreToTotal()
   game.turnCount += 1;
   game.checkState();
@@ -126,16 +113,55 @@ Player.prototype.holdDice = function(dice) {
   return this.diceHeld;
 };
 
-// Roll those dice
+// Roll those dice bb
 Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
-  this.diceRolled = getRandom(numberOfDiceToRoll);
+  let diceOnTable = document.querySelectorAll('.die');
+  let dice = passSelectedDice();
+  console.log(dice);
+  if (dice.length || diceOnTable.length !== 0) {
+    let tempDice = getScore(dice);
+    this.roundScore += tempDice.score;
+    renderRoundScore(this.roundScore);
+    console.log('tempDice: ', tempDice)
+    this.diceHeld.push.apply(this.diceHeld, tempDice.diceToScore);
+    this.saveState();
+    renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
+    if (this.diceHeld.length < 7) {
+      renderDieImgElements(convertToDiceArrayOfObjects(this.diceHeld), '#dice-hold-area ul');
+    } else {
+      while (holdAreaElement.lastChild) { 
+        holdAreaElement.removeChild(holdAreaElement.lastChild);
+      }
+    }
+    if (this.diceHeld.length >= 6) { // HOT DICE!!!
+      this.diceHeld = [];
+      clearBoard();
+      let hotDice = document.createElement('img');
+      hotDice.src = 'assets/gear50x50.png'
+      hotDice.altText = 'You Have Hot Dice Roll Again or Stay'
+      hotDice.class += 'hot-dice';
+      gameBoardElement.append(hotDice);
+    }
+  }
+  this.diceRolled = getRandom(6 - this.diceHeld.length);
+  this.saveState();
   renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
+  rollingDice = document.querySelectorAll('#board-area .die');
   let bustCheck = getScore(this.diceRolled);
   if (bustCheck.score === 0 && bustCheck.diceToRollAgain.length === 0 && bustCheck.diceToScore.length === 0) {
+    clearBoard();
+    roundScoreElement.textContent = 'BUST!!!'
+    this.diceHeld = [];
+    this.diceRolled = [];
+    this.roundScore = 0;
     game.turnCount += 1;
     game.checkState();
     game.saveState();
+  } else {
+    renderRoundScore(this.roundScore);
+    this.roundScore += tempDice.score;
   }
+  this.saveState();
   if (this.diceHeld.length === 0) {
     while (holdAreaElement.lastChild) { 
       holdAreaElement.removeChild(holdAreaElement.lastChild);
@@ -144,7 +170,6 @@ Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length
   game.checkState();
   game.saveState();
   this.saveState();
-  return this.diceRolled;
 };
 
 // Update the correct player object
@@ -160,11 +185,6 @@ Player.prototype.saveState = function() {
   localStorage.setItem('Player_List', JSON.stringify(players));
 };
 
-// TODO maybe consolidate this into something else
-Player.prototype.clearRoundScore = function() {
-  this.roundScore = 0;
-};
-
 // Global Functions
 function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-area ul') {
   // Remove existing dice elements if present
@@ -176,6 +196,7 @@ function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-are
   diceArray.forEach((die) => {
     let listItem = document.createElement('li');
     listItem.value = die.value;
+    listItem.setAttribute('selected', false);
     let newDie = document.createElement('img');
     newDie.src = die.src;
     newDie.alt = die.altText;
@@ -184,6 +205,15 @@ function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-are
     renderLocation.appendChild(listItem);
   });
 };
+
+function clearBoard(){
+  while (holdAreaElement.lastChild) { 
+    holdAreaElement.removeChild(holdAreaElement.lastChild);
+  }
+  while (gameBoardElement.lastChild){
+    gameBoardElement.removeChild(gameBoardElement.lastChild);
+  }
+}
 
 function renderRoundScore(score) {
   roundScoreElement.textContent = score;
@@ -281,7 +311,33 @@ function uuidv4() {
   );
 };
 
+// Init Game
 new Game;
+
+// Event Handler
+function handleDiceClick(event) {
+  var li = event.target.closest('li');
+  if (li && li.parentNode.parentNode.id === 'board-area') {
+    if (li.getAttribute('selected') === 'false') {
+      li.setAttribute('selected', true);
+    } else {
+      li.setAttribute('selected', false);
+    }
+  }
+};
+
+// Attach Event Handler
+document.body.addEventListener('click', handleDiceClick);
+
+// will use this function for event actions hold or roll
+function passSelectedDice() {
+  let tempArray = [];
+  let selected = document.querySelectorAll("li[selected='true']");
+  selected.forEach(item => {
+    tempArray.push(+item.value);
+  });
+  return tempArray;
+} 
 
 // // Test Cases for getScore
 // var time1 = performance.now();
