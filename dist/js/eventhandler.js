@@ -61,6 +61,9 @@ function handleDiceClick(event) {
   }  
   
 }
+rollingDice.addEventListener('click', handleDiceClick);
+
+
 
 // will use this function for event actions hold or roll
 function passSelectedDice() {
@@ -74,5 +77,3 @@ function passSelectedDice() {
   return tempArray;
 } 
 
-
-rollingDice.addEventListener('click', handleDiceClick);
