@@ -4,9 +4,9 @@ const players = [];
 var game;
 
 // Global Selectors
-let gameBoardElement = document.querySelector('#board-area ul');
-let holdAreaElement = document.querySelector('#dice-hold-area ul');
-let roundScoreElement = document.querySelector('#round-score');
+const gameBoardElement = document.querySelector('#board-area ul');
+const holdAreaElement = document.querySelector('#dice-hold-area ul');
+const roundScoreElement = document.querySelector('#round-score');
 
 // Retrieve From localStorage
 const retrievedPlayers = JSON.parse(localStorage.getItem('Player_List'));
@@ -63,6 +63,8 @@ Game.prototype.checkState = function() {
         this.gameActive = false;
       }
     });
+  } else {
+    console.log('Game Has Ended')
   }
 }
 
@@ -126,7 +128,6 @@ Player.prototype.holdDice = function(dice) {
 
 // Roll those dice
 Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
-  let bust = false;
   this.diceRolled = getRandom(numberOfDiceToRoll);
   renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
   let bustCheck = getScore(this.diceRolled);
