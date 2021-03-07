@@ -29,6 +29,11 @@ body {
   grid-area: 'round-score';
   justify-content: center;
   align-items: center;
+  border-bottom: solid;
+}
+
+.bold {
+  font-weight: bolder;
 }
 
 #board-area {
@@ -66,6 +71,8 @@ body {
 #dice-hold-area {
   display: grid;
   grid-area: dice-hold-area;
+  border-top: solid;
+  border-bottom: solid;
 }
 
 #player-score, #CPU-score {

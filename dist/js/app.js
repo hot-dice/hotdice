@@ -57,16 +57,22 @@ Game.prototype.checkState = function() {
       this.activePlayer = players[0];
       players[0].isTurn = true;
       players[1].isTurn = false;
+      player1score.classList = 'bold';
+      player2score.classList = '';
     } else {
       this.activePlayer = players[1];
       players[0].isTurn = false;
       players[1].isTurn = true;
+      player1score.classList = '';
+      player2score.classList = 'bold';
     }
     players.forEach(player => {
       if(player.totalScore >= 10000) {
         this.gameActive = false;
       }
     });
+    player1score.textContent = +players[0].totalScore;
+    player2score.textContent = +players[1].totalScore;
   } else {
     console.log('Game Has Ended')
   }
