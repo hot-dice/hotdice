@@ -3,22 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Hot Dice</title>
+    <title>Hot Dice Settings</title>
     <meta name="description" content="Hot Dice Settings">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/settings.css">
   </head>
   <body>
-    <div class="container">
+    <header>
       <h1>Settings</h1>
-      <p>Customize (stretch)</p>
-      <p>settings #2</p>
-      <p>Restart</p>
-      <p>About Us</p>
-      <a href="board.html">Return to Game</a>
-    </div>
-      
+      <a href="/"><img id="gear" src="assets/settings-gear.svg" alt="settings icon"></a>
+    </header>
+    <main>
+      <!-- <button>TODO</button>
+      <button>TODO</button> -->
+      <button onclick="localStorage.clear(); document.location='/';">Restart Game</button>
+      <button onclick="document.location='/about-us.html'">About Us</button>
+      <button onclick="document.location='/'">Return To Game</button>
+    </main>
   </body>
-  <script src="js/app.js" async defer></script>
 </html>
