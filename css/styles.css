@@ -1,0 +1,160 @@
+body {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100); /* iOS Chrome  Fix */
+  display: grid;
+  grid-template-rows: minmax(50px, 10%) minmax(25px,5%) minmax(45%, auto) minmax(25px, 15%) minmax(20px, 15%);
+  grid-template-columns: 1fr;
+  grid-template-areas: 
+    'total-score'
+    'round-score'
+    'board-area'
+    'dice-hold-area'
+    'actions';
+}
+
+#total-scores {
+  display: grid;
+  grid-area: total-score;
+  grid-template-columns: minmax(75px, 1fr) minmax(75px, 1fr) auto;
+  grid-template-rows: 1fr;
+  background-color: grey; /* remove later */
+  font-size: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+#total-scores div {
+  justify-self: center;
+}
+
+#gear {
+  justify-self: end;
+  width: auto; 
+  height: 100%;
+}
+
+
+
+#round-score {
+  display: grid;
+  grid-area: 'round-score';
+  justify-content: center;
+  align-items: center;
+  border-top: solid;
+  font-size: 1.5rem;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+#board-area {
+  display: grid;
+  grid-area: board-area;
+}
+
+#board-area ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  justify-items: center;
+  align-items: center;
+  gap: 5%;
+  padding: 5%;
+}
+
+.hot-dice {
+  justify-items: center;
+  align-items: center;
+}
+
+#dice-hold-area ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  justify-items: center;
+  align-items: center;
+  gap: 1%;
+}
+
+#dice-hold-area ul .die {
+  width: 2rem;
+  height: 2rem;
+}
+
+#dice-hold-area {
+  display: grid;
+  grid-area: dice-hold-area;
+  border-top: solid;
+  border-bottom: solid;
+}
+
+#player-score, #CPU-score {
+  text-align: center;
+}
+
+.die {
+  width: 4rem;
+  height: 4rem;
+}
+
+li[selected='false'] {
+  opacity: 1
+}
+
+li[selected='true'] {
+  opacity: .7
+}
+
+#actions {
+  display: grid;
+  grid-area: actions;
+  grid-template-columns: 1fr 1fr;
+  background-color: grey;
+}
+
+#actions button{
+  margin: .75rem;
+  border-radius: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#actions button:hover, #board-area .die, #gear {
+  cursor: pointer;
+}
+
+/* Horizontal Mobile Media Query */
+@media (max-width: 820px) and (max-height: 420px) {
+  .die {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  #dice-hold-area ul .die {
+    width: 2rem;
+    height: 2rem;
+  }  
+}
+
+/* Desktop Media Query */
+@media (min-width: 420px) and (min-height: 420px) {
+  .die {
+    width: 6rem;
+    height: 6rem;
+  }
+  #dice-hold-area ul .die {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+@media (min-width: 820px) {
+  .die {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  #dice-hold-area ul .die {
+    width: 5.2rem;
+    height: 5.2rem;
+  }
+}
