@@ -41,6 +41,10 @@ function Game() {
 Game.prototype.saveState = function() {
   game = this;
   console.log('Game Saved')
+  players.forEach(player => {
+    player.saveState();
+    console.log('Player Saved')
+  });
   localStorage.setItem('Game', JSON.stringify(game));
 }
 
@@ -51,6 +55,7 @@ Game.prototype.newGame = function() {
     new Player('Test01');
   }
   game = this;
+  game.saveState();
   localStorage.setItem('Game', JSON.stringify(game));
   player1name.textContent = `${players[0].name}`;
   player2name.textContent = `${players[1].name}`;
@@ -97,8 +102,15 @@ function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, round
   this.diceRolled = diceRolled;
   this.isTurn = isTurn;
   // Create player objects and push to players and save to localStorage
-  players.push(this);
-  localStorage.setItem('Player_List', JSON.stringify(players));
+  const savePlayer = new Promise((resolve, reject) => {
+    players.push(this);
+    resolve();
+  });
+  savePlayer.then(() => {
+    if(players.length !== 1) {
+      localStorage.setItem('Player_List', JSON.stringify(players));
+    }
+  });
 };
 
 // Player ProtoTypes
@@ -202,8 +214,10 @@ Player.prototype.saveState = function() {
 function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-area ul') {
   // Remove existing dice elements if present
   let renderLocation = document.querySelector(`${selectorToRenderIn}`);
-  while (renderLocation.lastChild) { 
-    renderLocation.removeChild(renderLocation.lastChild);
+  if(renderLocation) { 
+    while (renderLocation.lastChild) { 
+      renderLocation.removeChild(renderLocation.lastChild);
+    }
   }
   // Convert list
   diceArray.forEach((die) => {
