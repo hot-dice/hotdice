@@ -88,9 +88,15 @@ Game.prototype.checkState = function() {
     console.log('Game Has Ended')
     // since it's just 2 players, it only needs to compare the two total scores for now
     if (players[0].totalScore > players[1].totalScore) {
-      alert(`Congratulations, ${players[0].name}, you win!`);
+      let modal = document.getElementById("winModal");
+      let text = document.querySelector('#winModal div p');
+      modal.style.display = "block";
+      text.textContent = `Congratulations, ${players[0].name}, you win!`;
     } else {
-      alert(`Congratulations, ${players[1].name}, you win!`);
+      let modal = document.getElementById("winModal");
+      let text = document.querySelector('#winModal div p');
+      modal.style.display = "block";
+      text.textContent = `Congratulations, ${players[1].name}, you win!`;
     }
   }
 }
