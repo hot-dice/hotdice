@@ -86,6 +86,12 @@ Game.prototype.checkState = function() {
     player2score.textContent = `${+players[1].totalScore}`;
   } else {
     console.log('Game Has Ended')
+    // since it's just 2 players, it only needs to compare the two total scores for now
+    if (players[0].totalScore > players[1].totalScore) {
+      alert(`Congratulations, ${players[0].name}, you win!`);
+    } else {
+      alert(`Congratulations, ${players[1].name}, you win!`);
+    }
   }
 }
 
