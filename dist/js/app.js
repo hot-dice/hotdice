@@ -262,6 +262,7 @@ function renderRollingDice(){ // shows dice graphically rolling
   for (let i = 0; i < 6; i++) {
     let img = document.createElement('img');
     img.src = '../assets/rolling-dice.gif';
+    img.classList = 'die';
     board.appendChild(img);
   }
 }
