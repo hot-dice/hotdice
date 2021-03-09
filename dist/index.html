@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
   </head>
-  <body>
+  <body onload="checkCanRoll(); checkCanStay()">
     <div id="total-scores">
       <div id="player1-score">
         <span></span>
@@ -29,8 +29,8 @@
       <ul></ul>
     </div>
     <div id="actions">
-      <button onclick="game.activePlayer.rollDice()">Roll Dice</button>
-      <button onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
+      <button id="roll-dice" onclick="game.activePlayer.rollDice()">Roll Dice</button>
+      <button id="stay" onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
     </div>
   </body>
   <script src="js/constants.js" async defer></script>

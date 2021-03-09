@@ -19,10 +19,10 @@ var rollingDice = document.querySelectorAll('#board-area .die');
 const retrievedPlayers = JSON.parse(localStorage.getItem('Player_List'));
 if (retrievedPlayers) {
   retrievedPlayers.forEach(item => {
-    new Player(item.name, item.isTurn, item.id, item.totalScore, item.roundScore, item.diceHeld, item.diceRolled);
+    new Player(item.name, item.isTurn, item.id, item.totalScore, item.roundScore, item.diceHeld, item.diceRolled, item.timesRolled, item.timesHeld, item.unsorted);
     if(item.isTurn) {
       renderDieImgElements(convertToDiceArrayOfObjects(item.diceHeld), '#dice-hold-area ul');
-      renderDieImgElements(convertToDiceArrayOfObjects(item.diceRolled), '#board-area ul');
+      renderDieImgElements(convertToDiceArrayOfObjects(item.unsorted), '#board-area ul');
       renderRoundScore(item.roundScore);
     }
   });
@@ -31,19 +31,17 @@ if (retrievedPlayers) {
 /***
  * InitGame
  */
-function Game() {
-  this.gameActive = true;
-  this.turnCount = 0;
+function Game(gameActive = true, turnCount = 0) {
+  this.gameActive = gameActive;
+  this.turnCount = turnCount;
   this.activePlayer;
   this.newGame();
   this.checkState();
 };
 Game.prototype.saveState = function() {
   game = this;
-  console.log('Game Saved')
   players.forEach(player => {
     player.saveState();
-    console.log('Player Saved')
   });
   localStorage.setItem('Game', JSON.stringify(game));
 }
@@ -51,8 +49,8 @@ Game.prototype.saveState = function() {
 Game.prototype.newGame = function() {
   // TODO: ADD Modal TO have players select 1 or 2 player - If 1 player make a computer player else have to entires for names
   if (localStorage.getItem('Player_List') === null) {
-    new Player('Test00', true);
-    new Player('Test01');
+    new Player('Player 1', true);
+    new Player('Player 2');
   }
   game = this;
   game.saveState();
@@ -93,7 +91,7 @@ Game.prototype.checkState = function() {
  * Player Object Constructor Function
  * @param {string} playerName
  */
-function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, roundScore = 0, diceHeld = [], diceRolled = []) {
+function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, roundScore = 0, diceHeld = [], diceRolled = [], timesRolled = -1, timesHeld = 0, unsorted = []) {
   this.name = playerName;
   this.id = id;
   this.totalScore = totalScore;
@@ -101,16 +99,14 @@ function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, round
   this.diceHeld = diceHeld;
   this.diceRolled = diceRolled;
   this.isTurn = isTurn;
+  this.timesRolled = timesRolled;
+  this.timesHeld = timesHeld;
+  this.unsorted = unsorted;
   // Create player objects and push to players and save to localStorage
-  const savePlayer = new Promise((resolve, reject) => {
-    players.push(this);
-    resolve();
-  });
-  savePlayer.then(() => {
-    if(players.length !== 1) {
-      localStorage.setItem('Player_List', JSON.stringify(players));
-    }
-  });
+  players.push(this);
+  if(players.length !== 1) { // Prevent race condition
+    localStorage.setItem('Player_List', JSON.stringify(players));
+  }
 };
 
 // Player ProtoTypes
@@ -118,6 +114,8 @@ function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, round
 Player.prototype.addRoundScoreToTotal = function() {
   this.totalScore += this.roundScore;
   this.roundScore = 0;
+  this.timesRolled = -1;
+  this.timesHeld = 0;
   this.diceHeld = [];
   this.diceRolled = [];
   this.saveState();
@@ -129,6 +127,9 @@ Player.prototype.holdDice = function(dice) {
   this.roundScore += tempDice.score;
   this.diceHeld = [];
   this.diceRolled = [];
+  this.unsorted = [];
+  this.timesRolled = -1;
+  this.timesHeld = 0;
   clearBoard();
   renderRoundScore(0);
   this.addRoundScoreToTotal()
@@ -139,18 +140,46 @@ Player.prototype.holdDice = function(dice) {
   return this.diceHeld;
 };
 
+Player.prototype.canRoll = function() {
+  let canRoll = false;
+  let diceSelected = document.querySelectorAll("#board-area li[selected='true']");
+  let tempDiceToScore = []
+  diceSelected.forEach(die => {
+    tempDiceToScore.push(+die.value)
+  });
+  if (this.timesRolled === this.timesHeld - 1) {
+    canRoll = true;
+  } else if (this.timesRolled <= this.timesHeld && getScore(tempDiceToScore).score) {
+    canRoll = true;
+  } else {
+    canRoll = false
+  }
+  return canRoll;
+}
+
+Player.prototype.canStay = function() {
+  let canStay = false;
+  let dice = document.querySelectorAll("#board-area li");
+  if (dice.length !== 0) {
+    canStay = true;
+  }
+  return canStay;
+}
+
 // Roll those dice bb
 Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
+  this.unsorted = [];
+  this.timesRolled += 1;
   let diceOnTable = document.querySelectorAll('.die');
   let dice = passSelectedDice();
   let tempDice = getScore(dice);
   if (dice.length || diceOnTable.length !== 0) {
     this.roundScore += tempDice.score;
+    this.timesHeld += 1;
     renderRoundScore(this.roundScore);
-    console.log('tempDice: ', tempDice)
     this.diceHeld.push.apply(this.diceHeld, tempDice.diceToScore);
     this.saveState();
-    renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
+    // renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
     if (this.diceHeld.length < 7) {
       renderDieImgElements(convertToDiceArrayOfObjects(this.diceHeld), '#dice-hold-area ul');
     } else {
@@ -160,6 +189,8 @@ Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length
     }
     if (this.diceHeld.length >= 6) { // HOT DICE!!!
       this.diceHeld = [];
+      this.diceRolled = [];
+      this.unsorted = [];
       clearBoard();
       let hotDice = document.createElement('img');
       hotDice.src = 'assets/gear50x50.png'
@@ -169,6 +200,9 @@ Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length
     }
   }
   this.diceRolled = getRandom(6 - this.diceHeld.length);
+  this.diceRolled.forEach(item => {
+    this.unsorted.push(item);
+  });
   this.saveState();
   renderDieImgElements(convertToDiceArrayOfObjects(this.diceRolled));
   rollingDice = document.querySelectorAll('#board-area .die');
@@ -176,17 +210,15 @@ Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length
   if (bustCheck.score === 0 && bustCheck.diceToRollAgain.length === 0 && bustCheck.diceToScore.length === 0) {
     clearBoard();
     roundScoreElement.textContent = 'BUST!!!'
-    this.diceHeld = [];
-    this.diceRolled = [];
     this.roundScore = 0;
+    this.unsorted = [];
+    this.addRoundScoreToTotal()
     game.turnCount += 1;
     game.checkState();
     game.saveState();
   } else {
     renderRoundScore(this.roundScore);
-    this.roundScore += tempDice.score;
   }
-  this.saveState();
   if (this.diceHeld.length === 0) {
     while (holdAreaElement.lastChild) { 
       holdAreaElement.removeChild(holdAreaElement.lastChild);
@@ -258,7 +290,6 @@ function convertToDiceArrayOfObjects(inputArray) { // [1,2,3,4]
   });
   return objectArray;
 };
-
 
 /***
  * Calculates score, remaining dice, and scored dice
@@ -361,8 +392,26 @@ function handleDiceClick(event) {
   }
 };
 
+function checkCanRoll() {
+  let canRoll = game.activePlayer.canRoll();
+  document.querySelector('#roll-dice').disabled = !canRoll;
+}
+
+// TODO Stretch
+function checkCanStay() {
+  let canStay = game.activePlayer.canStay();
+  document.querySelector('#stay').disabled = !canStay;
+}
+
 // Attach Event Handler
 document.body.addEventListener('click', handleDiceClick);
+document.body.addEventListener('click', checkCanRoll);
+document.body.addEventListener('click', checkCanStay);
 
 // Init Game
-new Game;
+const retrieveGame = JSON.parse(localStorage.getItem('Game'));
+if (retrieveGame) {
+  new Game(retrieveGame.gameActive, retrieveGame.turnCount);
+} else {
+  new Game;
+}
