@@ -84,6 +84,18 @@ Game.prototype.checkState = function() {
     player2score.textContent = `${+players[1].totalScore}`;
   } else {
     console.log('Game Has Ended')
+    // since it's just 2 players, it only needs to compare the two total scores for now
+    if (players[0].totalScore < players[1].totalScore) {
+      let modal = document.getElementById("winModal");
+      let text = document.querySelector('#winModal div p');
+      modal.style.display = "block";
+      text.textContent = `Congratulations, ${players[1].name}, you win!`;
+    } else {
+      let modal = document.getElementById("winModal");
+      let text = document.querySelector('#winModal div p');
+      modal.style.display = "block";
+      text.textContent = `Congratulations, ${players[0].name}, you win!`;
+    }
   }
 }
 
@@ -131,6 +143,7 @@ Player.prototype.holdDice = function(dice) {
   this.timesRolled = -1;
   this.timesHeld = 0;
   clearBoard();
+  renderRollingDice();
   renderRoundScore(0);
   this.addRoundScoreToTotal()
   game.turnCount += 1;
@@ -240,9 +253,19 @@ Player.prototype.saveState = function() {
     }
   }
   localStorage.setItem('Player_List', JSON.stringify(players));
+  game.checkState();
 };
 
 // Global Functions
+function renderRollingDice(){ // shows dice graphically rolling
+  let board = document.querySelector('#board-area ul');
+  for (let i = 0; i < 6; i++) {
+    let img = document.createElement('img');
+    img.src = '../assets/rolling-dice.gif';
+    board.appendChild(img);
+  }
+}
+
 function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-area ul') {
   // Remove existing dice elements if present
   let renderLocation = document.querySelector(`${selectorToRenderIn}`);

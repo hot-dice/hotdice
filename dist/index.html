@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal.css">
   </head>
   <body onload="checkCanRoll(); checkCanStay()">
     <div id="total-scores">
@@ -31,6 +32,11 @@
     <div id="actions">
       <button id="roll-dice" onclick="game.activePlayer.rollDice()">Roll Dice</button>
       <button id="stay" onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
+    </div>
+    <div id="winModal" class="modal">
+      <div class="modal-content">
+        <p>text node goes here</p>
+      </div>    
     </div>
   </body>
   <script src="js/constants.js" async defer></script>
