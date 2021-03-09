@@ -132,6 +132,10 @@ li[selected='true'] {
   #dice-hold-area ul .die {
     width: 3rem;
     height: 3rem;
+  }
+  #round-score {
+    font-size: 2rem;
+    font-weight: bolder;
   }  
 }
 
@@ -159,6 +163,11 @@ li[selected='true'] {
     width: 4rem;
     height: 4rem;
   }
+
+  #round-score {
+    font-size: 2rem;
+    font-weight: bolder;
+  }  
 }
 
 @media (min-width: 820px) {
@@ -171,4 +180,9 @@ li[selected='true'] {
     width: 5.2rem;
     height: 5.2rem;
   }
+
+  #round-score {
+    font-size: 2rem;
+    font-weight: bolder;
+  }  
 }
