@@ -88,17 +88,75 @@ const mockRoles = {
 };
 
 context('Smoke Tests', () => {
-  before(() => {
-    cy.visit('');
+  describe('UI Tests', () => {
+    describe('Static Page Tests', () => {
+      before(() => {
+        cy.visit('');
+      });
+      it('should have correct app title', () => {
+        cy.title().should('eq', 'Hot Dice');
+      });
+  
+      it('should be able to roll on first round', () => {
+        cy.get('#roll-dice').should('not.have.attr', 'disabled');
+      });
+  
+      it('shouldn\'t be able to stay if no dice are rolled', () => {
+        cy.get('#stay').should('have.attr', 'disabled');
+      });
+
+      it('should have correct attributes for settings gear', () => {
+        cy.get('#gear').should('have.attr', 'src', 'assets/settings-gear.svg');
+        cy.get('#gear').parent().should('have.attr', 'href', '/settings.html');
+      });
+    })
+
+
+    describe('Roll and Stay Tests', () => {
+      beforeEach(() => {
+        localStorage.setItem('Player_List', '[{"name":"Player 1","id":"c23c0e6e-e564-4ccd-bdcb-2b723258c38a","totalScore":0,"roundScore":0,"diceHeld":[],"diceRolled":[1,3,4,5,5,6],"isTurn":true,"timesRolled":0,"timesHeld":0,"unsorted":[1,4,5,6,3,5],"totalTurns":0},{"name":"Player 2","id":"8296b1c0-9c46-4a24-9619-3e18ba868b7a","totalScore":0,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":false,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":0}]')
+        localStorage.setItem('Game', '{"gameActive":true,"turnCount":0,"activePlayer":{"name":"Player 1","id":"c23c0e6e-e564-4ccd-bdcb-2b723258c38a","totalScore":0,"roundScore":0,"diceHeld":[],"diceRolled":[1,3,4,5,5,6],"isTurn":true,"timesRolled":0,"timesHeld":0,"unsorted":[1,4,5,6,3,5],"totalTurns":0}}');
+        cy.visit('/');
+      });
+
+      it('should be able to roll again if a valid die is selected', () => {
+        cy.get('[value="1"] > .die').click();
+        cy.get('#roll-dice').should('not.have.attr', 'disabled');
+      });
+  
+      it('shouldn\'t be able to roll if no dice are held', () => {
+        cy.get('#roll-dice').should('have.attr', 'disabled');
+      });
+    });
+
+    describe('Win Condition Tests', () => {
+      it('should allow player1 to win');
+
+      it.skip('should allow player2 to win', () => {
+        localStorage.setItem('Player_List', '[{"name":"Player 1","id":"8e9931c0-6661-4a6c-b2fb-c8772417919e","totalScore":8850,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":false,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":20},{"name":"Player 2","id":"ffaf4d6a-be5b-43a8-a0ce-e202f157c62f","totalScore":9800,"roundScore":500,"diceHeld":[5,5,5],"diceRolled":[1,1,1],"isTurn":true,"timesRolled":2,"timesHeld":1,"unsorted":[1,1,1],"totalTurns":20}]');
+        localStorage.setItem('Game', '{"gameActive":true,"turnCount":40,"activePlayer":{"name":"Player 2","id":"ffaf4d6a-be5b-43a8-a0ce-e202f157c62f","totalScore":9800,"roundScore":500,"diceHeld":[5,5,5],"diceRolled":[1,1,1],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":20}}')
+        cy.visit('/')
+        cy.get('#stay').click();
+        cy.get('.modal-content').should('include.text', 'Congratulations you tied!');
+        cy.get('#player1-score p').should('include.text', '10000');
+        cy.get('#player2-score p').should('include.text', '10000');
+      });
+
+      it('should allow for a tie', () => {
+        localStorage.setItem('Player_List', '[{"name":"Player 1","id":"2f262eed-cd61-4c8a-8252-edb95cb7c919","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":false,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10},{"name":"Player 2","id":"539fb1c1-5573-46aa-a4be-3a07f596cafa","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10}]')
+        localStorage.setItem('Game', '{"gameActive":true,"turnCount":2,"activePlayer":{"name":"Player 1","id":"2f262eed-cd61-4c8a-8252-edb95cb7c919","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10}}');
+        cy.visit('');
+        cy.get('.modal-content').should('include.text', 'Congratulations you tied!');
+        cy.get('#player1-score p').should('include.text', '10000');
+        cy.get('#player2-score p').should('include.text', '10000');
+      });
+    });
   });
 
-  describe('UI Tests', () => {
-    it('should have correct app title', () => {
-      cy.title().should('eq', 'Hot Dice');
-    });
-  })
-
   describe('JavaScript Function Tests', () => {
+    before(() => {
+      cy.visit('');
+    })
     it('should calculate roles resulting in hot dice roles correctly', () => {
       cy.log('Testing getScore() score');
       cy.window().then((win) => {
