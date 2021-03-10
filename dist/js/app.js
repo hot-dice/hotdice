@@ -385,6 +385,9 @@ function handleDiceClick(event) {
 
 document.querySelector('.close').onclick = function() { //closes modal with x button
   document.querySelector(".modal").style.display = "none";
+  localStorage.clear();
+  document.location='/';
+  
 }
 
 // Attach Event Handler
