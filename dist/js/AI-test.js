@@ -18,7 +18,7 @@ function aiTurn() {
     setTimeout(function() {
       //your code to be executed after 1 second
       game.activePlayer.rollDice();
-      getScore(rollToCheck); 
+      getScore(dice); 
     }, delayInMilliseconds);
   }
 }
