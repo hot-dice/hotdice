@@ -145,10 +145,30 @@ context('Smoke Tests', () => {
       it('should allow for a tie', () => {
         localStorage.setItem('Player_List', '[{"name":"Player 1","id":"2f262eed-cd61-4c8a-8252-edb95cb7c919","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":false,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10},{"name":"Player 2","id":"539fb1c1-5573-46aa-a4be-3a07f596cafa","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10}]')
         localStorage.setItem('Game', '{"gameActive":true,"turnCount":2,"activePlayer":{"name":"Player 1","id":"2f262eed-cd61-4c8a-8252-edb95cb7c919","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10}}');
-        cy.visit('');
+        cy.visit('/');
         cy.get('.modal-content').should('include.text', 'Congratulations you tied!');
         cy.get('#player1-score p').should('include.text', '10000');
         cy.get('#player2-score p').should('include.text', '10000');
+      });
+    });
+
+    describe('Settings Page Tests', () => {
+      beforeEach(() => {
+        cy.visit('/settings');
+      })
+
+      it('should have correct title', () => {
+        cy.title().should('eq', 'Hot Dice Settings');
+      });
+
+      it('should have correct header text', () => {
+        cy.get('h1').should('include.text', 'Settings');
+      });
+
+      it('should have correct button text', () => {
+        cy.get('button:nth-of-type(1n)').should('include.text', 'Restart Game');
+        cy.get('button:nth-of-type(2n)').should('include.text', 'About Us');
+        cy.get('button:nth-of-type(3n)').should('include.text', 'Return To Game');
       });
     });
   });
