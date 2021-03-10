@@ -189,7 +189,7 @@ Player.prototype.canStay = function() {
 // Roll those dice bb
 Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length || 6) {
   this.unsorted = [];
-  this.timesRolled += 1;
+  this.timesRolled++;
   let diceOnTable = document.querySelectorAll('.die');
   let dice = passSelectedDice();
   let tempDice = getScore(dice);
@@ -267,7 +267,7 @@ function renderRollingDice(){ // shows dice graphically rolling
   for (let i = 0; i < 6; i++) {
     let img = document.createElement('img');
     img.src = '../assets/rolling-dice.gif';
-    img.classList = 'die';
+    img.classList = 'roll-die';
     board.appendChild(img);
   }
 }
