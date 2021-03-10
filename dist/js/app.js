@@ -94,7 +94,7 @@ Game.prototype.checkState = function() {
       let modal = document.getElementById("winModal");
       let text = document.querySelector('#winModal div p');
       modal.style.display = "block";
-      text.textContent = `Congratulations, ${players[1].name}, you win!`;
+      text.textContent = `Congratulations, ${players[0].name}, you win!`;
     } else {
       let modal = document.getElementById("winModal");
       let text = document.querySelector('#winModal div p');
