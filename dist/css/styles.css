@@ -102,6 +102,11 @@ body {
   height: 4rem;
 }
 
+.roll-die {
+  width: 4rem;
+  height: 4rem;
+}
+
 li[selected='false'] {
   opacity: 1
 }
@@ -147,10 +152,20 @@ li[selected='true'] {
     height: 3rem;
   }
 
+  .roll-die {
+    width: 3rem;
+    height: 3rem;
+  }
+
   #dice-hold-area ul .die {
     width: 2rem;
     height: 2rem;
-  }  
+  }
+  
+  #dice-hold-area ul .roll-die {
+    width: 2rem;
+    height: 2rem;
+  }
 }
 
 /* Desktop Media Query */
@@ -159,7 +174,18 @@ li[selected='true'] {
     width: 6rem;
     height: 6rem;
   }
+
+  .roll-die {
+    width: 6rem;
+    height: 6rem;
+  }
+
   #dice-hold-area ul .die {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  #dice-hold-area ul .roll-die {
     width: 4rem;
     height: 4rem;
   }
@@ -176,7 +202,17 @@ li[selected='true'] {
     height: 8rem;
   }
 
+  .roll-die {
+    width: 8rem;
+    height: 8rem;
+  }
+
   #dice-hold-area ul .die {
+    width: 5.2rem;
+    height: 5.2rem;
+  }
+
+  #dice-hold-area ul .roll-die {
     width: 5.2rem;
     height: 5.2rem;
   }
