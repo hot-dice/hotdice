@@ -94,7 +94,7 @@ Game.prototype.checkState = function() {
       let modal = document.getElementById("winModal");
       let text = document.querySelector('#winModal div p');
       modal.style.display = "block";
-      text.textContent = `Congratulations, ${players[0].name}, you win!`;
+      text.textContent = `Congratulations, ${players[1].name}, you win!`;
     } else {
       let modal = document.getElementById("winModal");
       let text = document.querySelector('#winModal div p');
@@ -420,6 +420,7 @@ function handleDiceClick(event) {
   }
 };
 
+<<<<<<< HEAD
 function checkCanRoll() {
   let canRoll = game.activePlayer.canRoll();
   document.querySelector('#roll-dice').disabled = !canRoll;
@@ -429,6 +430,10 @@ function checkCanRoll() {
 function checkCanStay() {
   let canStay = game.activePlayer.canStay();
   document.querySelector('#stay').disabled = !canStay;
+=======
+document.querySelector('.close').onclick = function() { //closes modal with x button
+  document.querySelector(".modal").style.display = "none";
+>>>>>>> dev
 }
 
 // Attach Event Handler
