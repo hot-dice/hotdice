@@ -168,6 +168,7 @@ context('Smoke Tests', () => {
       it('should have correct button text', () => {
         cy.get('button:nth-of-type(1n)').should('include.text', 'Restart Game');
         cy.get('button:nth-of-type(2n)').should('include.text', 'About Us');
+        cy.get('button:nth-of-type(3n)').should('include.text', 'Rules');
         cy.get('button:nth-of-type(3n)').should('include.text', 'Return To Game');
       });
     });
