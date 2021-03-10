@@ -63,7 +63,7 @@ Game.prototype.newGame = function() {
 Game.prototype.checkState = function() {
   if (this.gameActive) {
     players.forEach(player => {
-      if(player.totalScore >= 1000 && players[0].totalTurns === players[1].totalTurns) {
+      if(player.totalScore >= 10000 && players[0].totalTurns === players[1].totalTurns) {
         this.gameActive = false;
         this.checkState();
       }
