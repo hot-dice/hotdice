@@ -1,0 +1,28 @@
+body {
+  background-color: ivory;
+  padding: 5px;
+}
+
+header {
+  margin-bottom: 15%;
+}
+
+#gear {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+p {
+  padding-top: 5px;
+}
+
+ul {
+  list-style-type: circle;
+  margin-top: 5%;
+  font-weight: bold;
+}
+
+li {
+  font-weight: normal;
+  text-indent: 20px;
+}
