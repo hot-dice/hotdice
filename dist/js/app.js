@@ -78,7 +78,7 @@ Game.prototype.checkState = function() {
       player2area.classList = 'bold';
     }
     players.forEach(player => {
-      if(player.totalScore >= 10000) {
+      if(player.totalScore >= 500) {
         this.gameActive = false;
       }
     });
@@ -87,16 +87,16 @@ Game.prototype.checkState = function() {
   } else {
     console.log('Game Has Ended')
     // since it's just 2 players, it only needs to compare the two total scores for now
-    if (players[0].totalScore > players[1].totalScore) {
-      let modal = document.getElementById("winModal");
-      let text = document.querySelector('#winModal div p');
-      modal.style.display = "block";
-      text.textContent = `Congratulations, ${players[0].name}, you win!`;
-    } else {
+    if (players[0].totalScore < players[1].totalScore) {
       let modal = document.getElementById("winModal");
       let text = document.querySelector('#winModal div p');
       modal.style.display = "block";
       text.textContent = `Congratulations, ${players[1].name}, you win!`;
+    } else {
+      let modal = document.getElementById("winModal");
+      let text = document.querySelector('#winModal div p');
+      modal.style.display = "block";
+      text.textContent = `Congratulations, ${players[0].name}, you win!`;
     }
   }
 }
@@ -382,6 +382,10 @@ function handleDiceClick(event) {
     }
   }
 };
+
+document.querySelector('.close').onclick = function() {
+  document.querySelector(".modal").style.display = "none";
+}
 
 // Attach Event Handler
 document.body.addEventListener('click', handleDiceClick);
