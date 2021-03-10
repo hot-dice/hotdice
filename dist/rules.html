@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hot Dice Rules</title>
+    <meta name="description" content="Hot Dice Rules">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/rules.css">
+  </head>
+  <body>
+    <header>
+      <h1>Rules</h1>
+      <a href="/settings.html"><img id="gear" src="assets/settings-gear.svg" alt="settings icon"></a>
+    </header>
+    <main>
+      <div id="rules">
+        <ul>
+          <li>Hot Dice has 2 scores to track, the running score and total score.</li>
+          <li>A player rolls 6 dice to start and must retain at least 1 scoring die per roll.
+          <li>They may end their turn any time and transfer their running score to the total score or continue to roll their remaining dice.</li>
+          <li>If no scoring dice are rolled, the player BUSTS, ending their turn and losing their running score.</li>
+          <li>If all dice score, the player has HOT DICE! and gets to roll all 6 dice again while maintaining their running score.</li>
+          <li>This process is repeated until a player’s total score is 10,000.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Boxcars - six dice combinations</h3>
+        <ul>
+          <li>Six of a kind of 1s is 4000 points</li>
+          <li>Six of a kind is 3200 points</li>
+          <li>A straight (1,2,3,4,5,6) = 3200 points</li>
+          <li>Three pairs is 3200 points</li>
+          <li>Two triple sets is 3200 points</li>
+        </ul>
+        <h3>Scoring roles less than six dice</h3>
+        <ul>
+          <li>Five of a kind = Die value x 300 points</li>
+          <li>Four of a kind = Die value x 200 points</li>
+          <li>Three of a kind = Die value x 100 points</li>
+          <li>Single 1 = 100 points</li>
+          <li>Single 5 = 50 points</li>
+        </ul>
+      </div>
+      <div id="score">
+        <h3>Detailed Scoring Table</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Roll</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </main>
+  </body>
+  <footer>
+    <button onclick="document.location='/'">Return to Game</button>
+  </footer>
+  <script src="js/constants.js" async defer></script>
+  <script src="js/rules.js" async defer></script>
+</html>
