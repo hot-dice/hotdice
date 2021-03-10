@@ -63,7 +63,7 @@ Game.prototype.newGame = function() {
 Game.prototype.checkState = function() {
   if (this.gameActive) {
     players.forEach(player => {
-      if(player.totalScore >= 1000 && players[0].totalTurns === players[1].totalTurns) {
+      if(player.totalScore >= 10000 && players[0].totalTurns === players[1].totalTurns) {
         this.gameActive = false;
         this.checkState();
       }
@@ -431,7 +431,7 @@ function checkCanStay() {
   document.querySelector('#stay').disabled = !canStay;
 }
 
-document.querySelector('.close').onclick = function() { //closes modal with x button
+document.querySelector('.close').onclick = function() { //closes modal with x button and restarts games
   document.querySelector(".modal").style.display = "none";
   localStorage.clear();
   document.location='/';
