@@ -62,7 +62,8 @@ main h3 {
 main ul li {
   list-style: disc outside none;
   display: list-item;
-  margin-left: 1em;
+  margin-left: 1rem;
+  margin-bottom: .5rem
 }
 
 main ul {
