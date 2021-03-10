@@ -383,7 +383,7 @@ function handleDiceClick(event) {
   }
 };
 
-document.querySelector('.close').onclick = function() {
+document.querySelector('.close').onclick = function() { //closes modal with x button
   document.querySelector(".modal").style.display = "none";
 }
 
