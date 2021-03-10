@@ -19,7 +19,7 @@ var rollingDice = document.querySelectorAll('#board-area .die');
 const retrievedPlayers = JSON.parse(localStorage.getItem('Player_List'));
 if (retrievedPlayers) {
   retrievedPlayers.forEach(item => {
-    new Player(item.name, item.isTurn, item.id, item.totalScore, item.roundScore, item.diceHeld, item.diceRolled, item.timesRolled, item.timesHeld, item.unsorted);
+    new Player(item.name, item.isTurn, item.id, item.totalScore, item.roundScore, item.diceHeld, item.diceRolled, item.timesRolled, item.timesHeld, item.unsorted, item.totalTurns);
     if(item.isTurn) {
       renderDieImgElements(convertToDiceArrayOfObjects(item.diceHeld), '#dice-hold-area ul');
       renderDieImgElements(convertToDiceArrayOfObjects(item.unsorted), '#board-area ul');
@@ -62,6 +62,12 @@ Game.prototype.newGame = function() {
 // See who's turn it is
 Game.prototype.checkState = function() {
   if (this.gameActive) {
+    players.forEach(player => {
+      if(player.totalScore >= 1000 && players[0].totalTurns === players[1].totalTurns) {
+        this.gameActive = false;
+        this.checkState();
+      }
+    });
     if(this.turnCount % 2 === 0){
       this.activePlayer = players[0];
       players[0].isTurn = true;
@@ -75,26 +81,25 @@ Game.prototype.checkState = function() {
       player1area.classList = '';
       player2area.classList = 'bold';
     }
-    players.forEach(player => {
-      if(player.totalScore >= 10000) {
-        this.gameActive = false;
-      }
-    });
     player1score.textContent = `${+players[0].totalScore}`;
     player2score.textContent = `${+players[1].totalScore}`;
   } else {
-    console.log('Game Has Ended')
     // since it's just 2 players, it only needs to compare the two total scores for now
     if (players[0].totalScore < players[1].totalScore) {
       let modal = document.getElementById("winModal");
       let text = document.querySelector('#winModal div p');
       modal.style.display = "block";
       text.textContent = `Congratulations, ${players[1].name}, you win!`;
-    } else {
+    } else if (players[0].totalScore > players[1].totalScore) {
       let modal = document.getElementById("winModal");
       let text = document.querySelector('#winModal div p');
       modal.style.display = "block";
       text.textContent = `Congratulations, ${players[0].name}, you win!`;
+    } else {
+      let modal = document.getElementById("winModal");
+      let text = document.querySelector('#winModal div p');
+      modal.style.display = "block";
+      text.textContent = `Congratulations you tied!`;
     }
   }
 }
@@ -103,7 +108,7 @@ Game.prototype.checkState = function() {
  * Player Object Constructor Function
  * @param {string} playerName
  */
-function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, roundScore = 0, diceHeld = [], diceRolled = [], timesRolled = -1, timesHeld = 0, unsorted = []) {
+function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, roundScore = 0, diceHeld = [], diceRolled = [], timesRolled = -1, timesHeld = 0, unsorted = [], totalTurns = 0) {
   this.name = playerName;
   this.id = id;
   this.totalScore = totalScore;
@@ -114,6 +119,7 @@ function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, round
   this.timesRolled = timesRolled;
   this.timesHeld = timesHeld;
   this.unsorted = unsorted;
+  this.totalTurns = totalTurns;
   // Create player objects and push to players and save to localStorage
   players.push(this);
   if(players.length !== 1) { // Prevent race condition
@@ -124,6 +130,7 @@ function Player(playerName, isTurn = false, id = uuidv4(), totalScore = 0, round
 // Player ProtoTypes
 // Add round score to total and reset player round state
 Player.prototype.addRoundScoreToTotal = function() {
+  this.totalTurns++;
   this.totalScore += this.roundScore;
   this.roundScore = 0;
   this.timesRolled = -1;
@@ -227,8 +234,6 @@ Player.prototype.rollDice = function(numberOfDiceToRoll = this.diceRolled.length
     this.unsorted = [];
     this.addRoundScoreToTotal()
     game.turnCount += 1;
-    game.checkState();
-    game.saveState();
   } else {
     renderRoundScore(this.roundScore);
   }
@@ -362,7 +367,6 @@ function getScore(rollToCheck) {
   }
 
   // Return Score, Dice Eligible To Roll Again And Dice To Store As An Object
-  // return [score, diceToRollAgain, diceToStore]; // Slightly faster and more consistent with objects
   return {score: score, diceToRollAgain: diceToRollAgain, diceToScore: diceToStore}
 };
 
@@ -421,7 +425,7 @@ function checkCanRoll() {
   document.querySelector('#roll-dice').disabled = !canRoll;
 }
 
-// TODO Stretch
+// Check player can stay
 function checkCanStay() {
   let canStay = game.activePlayer.canStay();
   document.querySelector('#stay').disabled = !canStay;
