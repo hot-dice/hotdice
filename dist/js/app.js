@@ -78,7 +78,7 @@ Game.prototype.checkState = function() {
       player2area.classList = 'bold';
     }
     players.forEach(player => {
-      if(player.totalScore >= 500) {
+      if(player.totalScore >= 10000) {
         this.gameActive = false;
       }
     });
