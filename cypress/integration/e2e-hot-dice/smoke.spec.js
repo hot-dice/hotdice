@@ -143,7 +143,7 @@ context('Smoke Tests', () => {
       });
     })
 
-    it('should be able to calculate score for 100,000 roles under 1 seconds', () => {
+    it('should be able to calculate score for 100,000 roles under 1.5 seconds', () => {
       cy.log('Testing getScore() Performance');
       cy.window().then((win) => {
         const tempScores = [];
@@ -156,7 +156,7 @@ context('Smoke Tests', () => {
         })
         let time2 = performance.now();
         let runTime = (time2 - time1) / 1000;
-        expect(runTime).to.be.lessThan(1);
+        expect(runTime).to.be.lessThan(1.5);
       });
     });
   })

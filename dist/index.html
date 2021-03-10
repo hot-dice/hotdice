@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Redressed&display=swap" rel="stylesheet"> 
   </head>
-  <body>    
+  <body onload="checkCanRoll(); checkCanStay()">
     <div id="total-scores">
       <div id="player1-score">
         <span></span>
@@ -32,8 +32,8 @@
       <ul></ul>
     </div>
     <div id="actions">
-      <button onclick="game.activePlayer.rollDice()">Roll Dice</button>
-      <button onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
+      <button id="roll-dice" onclick="game.activePlayer.rollDice()">Roll Dice</button>
+      <button id="stay" onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
     </div>
     <div id="winModal" class="modal">
       <div class="modal-content">
