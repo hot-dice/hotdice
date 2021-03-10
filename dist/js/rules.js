@@ -1,10 +1,8 @@
 'use strict';
 
 const table = document.querySelector('#score table');
-console.log(table);
 
 scoreTuples.forEach(tuple => {
-  console.log(tuple);
   let row = document.createElement('tr');
   let td = document.createElement('td');
   let td2 = document.createElement('td');
