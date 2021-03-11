@@ -234,12 +234,3 @@ li[selected='true'] {
     font-weight: bolder;
   }  
 }
-
-button {
-  color: black;
-  background-color: white;
-}
-
-button:disabled {
-  opacity: .5;
-}
