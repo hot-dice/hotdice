@@ -235,3 +235,7 @@ button {
   color: black;
   background-color: white;
 }
+
+input[type="button"]:disabled {
+  opacity: .5;
+}
