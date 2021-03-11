@@ -54,6 +54,8 @@ Game.prototype.newGame = function() {
   }
   game = this;
   game.saveState();
+  checkCanRoll();
+  checkCanStay();
   localStorage.setItem('Game', JSON.stringify(game));
   player1name.textContent = `${players[0].name}`;
   player2name.textContent = `${players[1].name}`;
