@@ -1,16 +1,8 @@
-html, body {
-  height: 100%;
-}
-
-.app {
-  height: 100%;
-}
-
 body * {
   font-family: 'Noto Sans', sans-serif;
 }
 
-body > div {
+body {
   background-color: grey;
   min-height: 100vh;
   min-height: calc(var(--vh, 1vh) * 100); /* iOS Chrome  Fix */
