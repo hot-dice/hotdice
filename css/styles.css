@@ -236,6 +236,6 @@ button {
   background-color: white;
 }
 
-input[type="button"]:disabled {
+button:disabled {
   opacity: .5;
 }
