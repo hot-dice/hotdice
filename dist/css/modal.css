@@ -28,6 +28,9 @@
   width: 80%;
   font-family: 'Redressed', cursive;
   font-size: 20px;
+  margin: unset;
+  padding: unset;
+  box-sizing: unset;
 }
 
 .close {
