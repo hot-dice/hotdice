@@ -5,16 +5,13 @@
   display: none;
   position: fixed;
   top: 30%;
-  left: 20%;
+  left: 10%;
   z-index: 1; 
-  
-  padding-top: 5%;
-  
-  width: 60%; 
-  height: 15%;
+  box-sizing: border-box;
+  padding-top: 1rem;
+  width: 80%; 
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-
   border-radius: 15px;
 }
 
@@ -25,15 +22,16 @@
   padding: 20px;
   border: 1px solid #888;
   border-radius: 15px;
-  width: 80%;
   font-family: 'Redressed', cursive;
   font-size: 20px;
+  margin: 8px;
+  min-height: 80%;
 }
 
 .close {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 5px;
   font-size: 30px;
   font-weight: bold;
 }

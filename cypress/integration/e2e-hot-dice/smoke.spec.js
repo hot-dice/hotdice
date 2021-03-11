@@ -121,11 +121,13 @@ context('Smoke Tests', () => {
 
       it('should be able to roll again if a valid die is selected', () => {
         cy.get('[value="1"] > .die').click();
-        cy.get('#roll-dice').should('not.have.attr', 'disabled');
+        cy.wait(100);
+        cy.get('#roll-dice').should('not.be.disabled')
       });
   
       it('shouldn\'t be able to roll if no dice are held', () => {
-        cy.get('#roll-dice').should('have.attr', 'disabled');
+        cy.wait(100);
+        cy.get('#roll-dice').should('be.disabled')
       });
     });
 

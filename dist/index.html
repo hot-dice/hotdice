@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Redressed&family=Roboto&display=swap" rel="stylesheet">  
   </head>
-  <body onload="checkCanRoll(); checkCanStay()">
+  <body>
     <header id="total-scores">
       <div id="player1-score">
         <span></span>
@@ -23,7 +23,7 @@
         <span></span>
         <p></p>
       </div>
-      <a href="/settings.html"><img id="gear" src="assets/settings-gear.svg" tabIndex="9" alt="settings icon"></a>
+      <a href="/settings.html"><img id="gear" src="assets/settings-gear.svg" alt="settings icon"></a>
     </header>
     <div id="round-score"></div>
     <div id="board-area">
@@ -43,6 +43,7 @@
       </div>    
     </div>
   </body>
+  <script src="js/height-calc.js" async defer></script>
   <script src="js/constants.js" async defer></script>
   <script src="js/app.js" async defer></script>
 </html>
