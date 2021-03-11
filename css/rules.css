@@ -43,12 +43,6 @@ header h1 {
   margin-right: -48px;
 }
 
-#gear {
-  justify-self: end;
-  width: auto; 
-  height: 100%;
-}
-
 main {
   grid-area: main;
   border-top: solid;
@@ -58,38 +52,52 @@ main {
   overflow: auto;
 }
 
-main img {
-  float:left;
-  padding: .75rem;
+main div {
+  padding-bottom: 20px;
 }
 
-.names {
-  display: grid;
-  grid-template-columns: minmax(75px, 1fr) auto auto ;
-  justify-self: center;
-  background-color: white;
-  align-items: center;
+main h3 {
+  text-align: center;
+  font-weight: bolder;
+  background-color: grey;
+  border-top: solid;
 }
 
-.description {
-  min-height: 150px;
+main ul li {
+  list-style: disc outside none;
+  display: list-item;
+  margin-left: 1rem;
+  margin-bottom: .5rem
 }
 
-.description p {
-  font-family: Arial, Helvetica, sans-serif;
+main ul {
+  margin-top: 10px;
   padding: 10px;
 }
 
-.description img {
-  width: 8rem;
-  height: auto;
-  padding: 0;
-  margin: .5rem;
-  border-radius: 10px;
+#score table {
+  width: 100%;
 }
 
-main > div:not(:first-of-type) {
-  border-top: solid;
+th {
+  background-color: grey;
+  font-weight: bold;
+}
+
+th, tr, td {
+  border: solid 1px black;
+}
+
+td {
+  text-align: right;
+}
+
+td:nth-child(odd) {
+  text-align: center;
+}
+
+td {
+  padding: 10px;
 }
 
 footer {
