@@ -40,8 +40,6 @@ body {
   height: 100%;
 }
 
-
-
 #round-score {
   display: grid;
   grid-area: 'round-score';
@@ -52,8 +50,13 @@ body {
   background-color: #247345;
 }
 
+#total-scores * {
+  font-family: 'Roboto', sans-serif;
+}
+
 .bold {
   font-weight: bolder;
+  text-decoration: underline;
 }
 
 #board-area {
