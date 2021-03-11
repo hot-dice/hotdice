@@ -14,33 +14,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Redressed&family=Roboto&display=swap" rel="stylesheet">  
   </head>
   <body onload="checkCanRoll(); checkCanStay()">
-    <header id="total-scores">
-      <div id="player1-score">
-        <span></span>
-        <p></p>
+    <div class="app">
+      <header id="total-scores">
+        <div id="player1-score">
+          <span></span>
+          <p></p>
+        </div>
+        <div id="player2-score">
+          <span></span>
+          <p></p>
+        </div>
+        <a href="settings"><img id="gear" src="assets/settings-gear.svg" tabIndex="9" alt="settings icon"></a>
+      </header>
+      <div id="round-score"></div>
+      <div id="board-area">
+        <ul></ul>
       </div>
-      <div id="player2-score">
-        <span></span>
-        <p></p>
+      <div id="dice-hold-area">
+        <ul></ul>
       </div>
-      <a href="settings"><img id="gear" src="assets/settings-gear.svg" tabIndex="9" alt="settings icon"></a>
-    </header>
-    <div id="round-score"></div>
-    <div id="board-area">
-      <ul></ul>
-    </div>
-    <div id="dice-hold-area">
-      <ul></ul>
-    </div>
-    <div id="actions">
-      <button id="roll-dice" tabIndex="7" onclick="game.activePlayer.rollDice()">Roll Dice</button>
-      <button id="stay" tabIndex="8" onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
-    </div>
-    <div id="winModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="localStorage.clear(); document.location='/hotdice';">&times;</span>
-        <p>text node goes here</p>
-      </div>    
+      <div id="actions">
+        <button id="roll-dice" tabIndex="7" onclick="game.activePlayer.rollDice()">Roll Dice</button>
+        <button id="stay" tabIndex="8" onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
+      </div>
+      <div id="winModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="localStorage.clear(); document.location='/hotdice';">&times;</span>
+          <p>text node goes here</p>
+        </div>    
+      </div>
     </div>
   </body>
   <script src="js/constants.js" async defer></script>
