@@ -114,3 +114,7 @@ footer button {
   font-size: 1.5rem;
   font-weight: bold;
 }
+
+button {
+  color: white;
+}

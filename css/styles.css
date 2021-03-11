@@ -3,6 +3,7 @@ body * {
 }
 
 body {
+  background-color: grey;
   min-height: 100vh;
   min-height: calc(var(--vh, 1vh) * 100); /* iOS Chrome  Fix */
   display: grid;
@@ -228,4 +229,8 @@ li[selected='true'] {
     font-size: 1.5rem;
     font-weight: bolder;
   }  
+}
+
+button {
+  color: white;
 }
