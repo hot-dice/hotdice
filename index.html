@@ -23,7 +23,7 @@
         <span></span>
         <p></p>
       </div>
-      <a href="/settings.html"><img id="gear" src="assets/settings-gear.svg" alt="settings icon"></a>
+      <a href="settings"><img id="gear" src="assets/settings-gear.svg" alt="settings icon"></a>
     </header>
     <div id="round-score"></div>
     <div id="board-area">
@@ -38,12 +38,12 @@
     </div>
     <div id="winModal" class="modal">
       <div class="modal-content">
-        <span class="close" onclick="localStorage.clear(); document.location='/';">&times;</span>
+        <span class="close" onclick="localStorage.clear(); document.location='/hotdice';">&times;</span>
         <p>text node goes here</p>
       </div>    
     </div>
   </body>
-  <script src="js/height-calc.js" async defer></script>
   <script src="js/constants.js" async defer></script>
   <script src="js/app.js" async defer></script>
+  <script src="js/height-calc.js" async defer></script>
 </html>
