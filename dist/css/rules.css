@@ -1,0 +1,116 @@
+body * {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100); /* iOS Chrome  Fix */
+  display: grid;
+  grid-template-rows: minmax(50px, calc(var(--vh, 1vh) * 10)) auto auto;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+  background-color: #247345;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar, main::-webkit-scrollbar {
+  display: none;
+}
+
+body, main {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;
+}
+
+header {
+  display: grid;
+  grid-area: header;
+  grid-template-columns: minmax(75px, 1fr) auto;
+  grid-template-rows: 1fr;
+  background-color: grey; /* remove later */
+  font-size: 1.5rem;
+  align-items: center;
+}
+
+header h1 {
+  justify-self: center;
+  font-weight: bolder;
+  font-size: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-right: -48px;
+}
+
+main {
+  grid-area: main;
+  border-top: solid;
+  font-size: 1.5rem;
+  align-items: center;
+  gap: 20px;
+  overflow: auto;
+}
+
+main div {
+  padding-bottom: 20px;
+}
+
+main h3 {
+  text-align: center;
+  font-weight: bolder;
+  background-color: grey;
+  border-top: solid;
+}
+
+main ul li {
+  list-style: disc outside none;
+  display: list-item;
+  margin-left: 1rem;
+  margin-bottom: .5rem
+}
+
+main ul {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+#score table {
+  width: 100%;
+}
+
+th {
+  background-color: grey;
+  font-weight: bold;
+}
+
+th, tr, td {
+  border: solid 1px black;
+}
+
+td {
+  text-align: right;
+}
+
+td:nth-child(odd) {
+  text-align: center;
+}
+
+td {
+  padding: 10px;
+}
+
+footer {
+  display: grid;
+  grid-area: footer;
+  grid-template-rows: 1fr;
+  align-items: center;
+}
+
+footer button {
+  min-height: 75px;
+  margin: .75rem;
+  border-radius: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
