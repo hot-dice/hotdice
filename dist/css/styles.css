@@ -40,8 +40,6 @@ body {
   height: 100%;
 }
 
-
-
 #round-score {
   display: grid;
   grid-area: 'round-score';
