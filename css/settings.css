@@ -3,8 +3,6 @@ body * {
 }
 
 body {
-  min-height: 100vh;
-  min-height: calc(var(--vh, 1vh) * 100); /* iOS Chrome  Fix */
   display: grid;
   grid-template-rows: minmax(50px, 10%) auto;
   grid-template-columns: 1fr;
