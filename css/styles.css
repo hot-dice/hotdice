@@ -4,8 +4,8 @@ body * {
 
 body {
   background-color: grey;
-  min-height: 100vh;
-  min-height: calc(var(--vh, 1vh) * 100); /* iOS Chrome  Fix */
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100); /* iOS Chrome  Fix */
   display: grid;
   grid-template-rows: minmax(50px, 10%) minmax(25px,5%) minmax(45%, auto) minmax(25px, 15%) minmax(20px, 15%);
   grid-template-columns: 1fr;
