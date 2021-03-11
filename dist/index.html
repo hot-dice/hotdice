@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Hot Dice</title>
-    <meta name="description" content="Hot Dice Browser Game">
+    <link rel="shortcut icon" type="image/jpg" href="assets/casino.svg"/>
+    <meta name="description" content="Hot Dice Mobile Game">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
@@ -13,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Redressed&display=swap" rel="stylesheet"> 
   </head>
   <body onload="checkCanRoll(); checkCanStay()">
-    <div id="total-scores">
+    <header id="total-scores">
       <div id="player1-score">
         <span></span>
         <p></p>
@@ -22,8 +23,8 @@
         <span></span>
         <p></p>
       </div>
-      <a href="/settings.html"><img id="gear" src="assets/settings-gear.svg" alt="settings icon"></a>
-    </div>
+      <a href="/settings.html"><img id="gear" src="assets/settings-gear.svg" tabIndex="9" alt="settings icon"></a>
+    </header>
     <div id="round-score"></div>
     <div id="board-area">
       <ul></ul>
@@ -32,8 +33,8 @@
       <ul></ul>
     </div>
     <div id="actions">
-      <button id="roll-dice" onclick="game.activePlayer.rollDice()">Roll Dice</button>
-      <button id="stay" onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
+      <button id="roll-dice" tabIndex="7" onclick="game.activePlayer.rollDice()">Roll Dice</button>
+      <button id="stay" tabIndex="8" onclick="game.activePlayer.holdDice(game.activePlayer.diceRolled)">Stay</button>
     </div>
     <div id="winModal" class="modal">
       <div class="modal-content">

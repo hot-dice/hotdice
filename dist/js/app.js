@@ -281,8 +281,11 @@ function renderDieImgElements(diceArray = dice, selectorToRenderIn = '#board-are
     }
   }
   // Convert list
-  diceArray.forEach((die) => {
+  diceArray.forEach((die, index) => {
     let listItem = document.createElement('li');
+    if(selectorToRenderIn === '#board-area ul') {
+      listItem.tabIndex = index + 1;
+    }
     listItem.value = die.value;
     listItem.setAttribute('selected', false);
     let newDie = document.createElement('img');
@@ -439,9 +442,19 @@ document.querySelector('.close').onclick = function() { //closes modal with x bu
 }
 
 // Attach Event Handler
-document.body.addEventListener('click', handleDiceClick);
-document.body.addEventListener('click', checkCanRoll);
-document.body.addEventListener('click', checkCanStay);
+document.body.addEventListener('click', (e) => {
+  handleDiceClick(e);
+  checkCanRoll();
+  checkCanStay();
+});
+
+document.body.addEventListener('keydown', (e) => {
+  if (e.code === "Space") {
+    handleDiceClick(e);
+    checkCanRoll();
+    checkCanStay();
+  }
+});
 
 // Init Game
 const retrieveGame = JSON.parse(localStorage.getItem('Game'));
