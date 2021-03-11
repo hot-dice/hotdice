@@ -52,8 +52,13 @@ body {
   background-color: #247345;
 }
 
+#total-scores * {
+  font-family: 'Roboto', sans-serif;
+}
+
 .bold {
   font-weight: bolder;
+  text-decoration: underline;
 }
 
 #board-area {
