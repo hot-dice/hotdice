@@ -439,7 +439,7 @@ function checkCanStay() {
 document.querySelector('.close').onclick = function() { //closes modal with x button and restarts games
   document.querySelector(".modal").style.display = "none";
   localStorage.clear();
-  document.location='/';
+  document.location='/hotdice';
   
 }
 
