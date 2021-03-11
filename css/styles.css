@@ -232,5 +232,6 @@ li[selected='true'] {
 }
 
 button {
-  color: white;
+  color: black;
+  background-color: white;
 }

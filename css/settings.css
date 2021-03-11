@@ -56,5 +56,6 @@ button{
 }
 
 button {
-  color: white;
+  color: black;
+  background-color: white;
 }
