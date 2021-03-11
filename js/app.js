@@ -456,6 +456,12 @@ document.body.addEventListener('keydown', (e) => {
   }
 });
 
+window.onload = window.onresize = function () {
+  var body = document.querySelector('body')
+  var height = window.innerHeight;
+  body.style.height = height + "px";
+}
+
 // Init Game
 const retrieveGame = JSON.parse(localStorage.getItem('Game'));
 if (retrieveGame) {
