@@ -96,11 +96,11 @@ context('Smoke Tests', () => {
       it('should have correct app title', () => {
         cy.title().should('eq', 'Hot Dice');
       });
-  
+
       it('should be able to roll on first round', () => {
         cy.get('#roll-dice').should('not.have.attr', 'disabled');
       });
-  
+
       it('shouldn\'t be able to stay if no dice are rolled', () => {
         cy.get('#stay').should('have.attr', 'disabled');
       });
@@ -109,12 +109,12 @@ context('Smoke Tests', () => {
         cy.get('#gear').should('have.attr', 'src', 'assets/settings-gear.svg');
         cy.get('#gear').parent().should('have.attr', 'href', '/settings.html');
       });
-    })
+    });
 
 
     describe('Roll and Stay Tests', () => {
       beforeEach(() => {
-        localStorage.setItem('Player_List', '[{"name":"Player 1","id":"c23c0e6e-e564-4ccd-bdcb-2b723258c38a","totalScore":0,"roundScore":0,"diceHeld":[],"diceRolled":[1,3,4,5,5,6],"isTurn":true,"timesRolled":0,"timesHeld":0,"unsorted":[1,4,5,6,3,5],"totalTurns":0},{"name":"Player 2","id":"8296b1c0-9c46-4a24-9619-3e18ba868b7a","totalScore":0,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":false,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":0}]')
+        localStorage.setItem('Player_List', '[{"name":"Player 1","id":"c23c0e6e-e564-4ccd-bdcb-2b723258c38a","totalScore":0,"roundScore":0,"diceHeld":[],"diceRolled":[1,3,4,5,5,6],"isTurn":true,"timesRolled":0,"timesHeld":0,"unsorted":[1,4,5,6,3,5],"totalTurns":0},{"name":"Player 2","id":"8296b1c0-9c46-4a24-9619-3e18ba868b7a","totalScore":0,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":false,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":0}]');
         localStorage.setItem('Game', '{"gameActive":true,"turnCount":0,"activePlayer":{"name":"Player 1","id":"c23c0e6e-e564-4ccd-bdcb-2b723258c38a","totalScore":0,"roundScore":0,"diceHeld":[],"diceRolled":[1,3,4,5,5,6],"isTurn":true,"timesRolled":0,"timesHeld":0,"unsorted":[1,4,5,6,3,5],"totalTurns":0}}');
         cy.visit('/');
       });
@@ -122,12 +122,12 @@ context('Smoke Tests', () => {
       it('should be able to roll again if a valid die is selected', () => {
         cy.get('[value="1"] > .die').click();
         cy.wait(100);
-        cy.get('#roll-dice').should('not.be.disabled')
+        cy.get('#roll-dice').should('not.be.disabled');
       });
-  
+
       it('shouldn\'t be able to roll if no dice are held', () => {
         cy.wait(100);
-        cy.get('#roll-dice').should('be.disabled')
+        cy.get('#roll-dice').should('be.disabled');
       });
     });
 
@@ -136,8 +136,8 @@ context('Smoke Tests', () => {
 
       it.skip('should allow player2 to win', () => {
         localStorage.setItem('Player_List', '[{"name":"Player 1","id":"8e9931c0-6661-4a6c-b2fb-c8772417919e","totalScore":8850,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":false,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":20},{"name":"Player 2","id":"ffaf4d6a-be5b-43a8-a0ce-e202f157c62f","totalScore":9800,"roundScore":500,"diceHeld":[5,5,5],"diceRolled":[1,1,1],"isTurn":true,"timesRolled":2,"timesHeld":1,"unsorted":[1,1,1],"totalTurns":20}]');
-        localStorage.setItem('Game', '{"gameActive":true,"turnCount":40,"activePlayer":{"name":"Player 2","id":"ffaf4d6a-be5b-43a8-a0ce-e202f157c62f","totalScore":9800,"roundScore":500,"diceHeld":[5,5,5],"diceRolled":[1,1,1],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":20}}')
-        cy.visit('/')
+        localStorage.setItem('Game', '{"gameActive":true,"turnCount":40,"activePlayer":{"name":"Player 2","id":"ffaf4d6a-be5b-43a8-a0ce-e202f157c62f","totalScore":9800,"roundScore":500,"diceHeld":[5,5,5],"diceRolled":[1,1,1],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":20}}');
+        cy.visit('/');
         cy.get('#stay').click();
         cy.get('.modal-content').should('include.text', 'Congratulations you tied!');
         cy.get('#player1-score p').should('include.text', '10000');
@@ -145,7 +145,7 @@ context('Smoke Tests', () => {
       });
 
       it('should allow for a tie', () => {
-        localStorage.setItem('Player_List', '[{"name":"Player 1","id":"2f262eed-cd61-4c8a-8252-edb95cb7c919","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":false,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10},{"name":"Player 2","id":"539fb1c1-5573-46aa-a4be-3a07f596cafa","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10}]')
+        localStorage.setItem('Player_List', '[{"name":"Player 1","id":"2f262eed-cd61-4c8a-8252-edb95cb7c919","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":false,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10},{"name":"Player 2","id":"539fb1c1-5573-46aa-a4be-3a07f596cafa","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10}]');
         localStorage.setItem('Game', '{"gameActive":true,"turnCount":2,"activePlayer":{"name":"Player 1","id":"2f262eed-cd61-4c8a-8252-edb95cb7c919","totalScore":10000,"roundScore":0,"diceHeld":[],"diceRolled":[],"isTurn":true,"timesRolled":-1,"timesHeld":0,"unsorted":[],"totalTurns":10}}');
         cy.visit('/');
         cy.get('.modal-content').should('include.text', 'Congratulations you tied!');
@@ -157,7 +157,7 @@ context('Smoke Tests', () => {
     describe('Settings Page Tests', () => {
       beforeEach(() => {
         cy.visit('/settings');
-      })
+      });
 
       it('should have correct title', () => {
         cy.title().should('eq', 'Hot Dice Settings');
@@ -179,14 +179,19 @@ context('Smoke Tests', () => {
   describe('JavaScript Function Tests', () => {
     before(() => {
       cy.visit('');
-    })
-    it('should calculate roles resulting in hot dice roles correctly', () => {
+    });
+    it('should calculate roles resulting in hot dice roles correctly', {
+      retries: {
+        runMode: 2,
+        openMode: 1
+      }
+    }, () => {
       cy.log('Testing getScore() score');
       cy.window().then((win) => {
         mockRoles.hotDiceRoles.forEach(role => {
           let result = win.getScore(role[0]);
           assert.equal(result.score, role[1]);
-          assert.equal(result.diceToRollAgain.length, 0);;
+          assert.equal(result.diceToRollAgain.length, 0);
           assert.deepEqual(result.diceToScore, role[0]);
         });
       });
@@ -222,7 +227,7 @@ context('Smoke Tests', () => {
         let runTime = (time2 - time1) / 1000;
         expect(runTime).to.be.lessThan(6);
       });
-    })
+    });
 
     it('should be able to calculate score for 100,000 roles under 1.5 seconds', () => {
       cy.log('Testing getScore() Performance');
@@ -234,11 +239,11 @@ context('Smoke Tests', () => {
         let time1 = performance.now();
         tempScores.forEach(roll => {
           win.getScore(roll);
-        })
+        });
         let time2 = performance.now();
         let runTime = (time2 - time1) / 1000;
         expect(runTime).to.be.lessThan(1.5);
       });
     });
-  })
+  });
 });
