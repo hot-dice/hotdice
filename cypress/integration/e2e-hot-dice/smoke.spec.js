@@ -211,7 +211,7 @@ context('Smoke Tests', () => {
       });
     });
 
-    it('should be able to roll 100,000 times in under 4 seconds', () => {
+    it('should be able to roll 100,000 times in under 6 seconds', () => {
       cy.log('Testing getRandom() Performance');
       cy.window().then((win) => {
         let time1 = performance.now();
@@ -220,7 +220,7 @@ context('Smoke Tests', () => {
         }
         let time2 = performance.now();
         let runTime = (time2 - time1) / 1000;
-        expect(runTime).to.be.lessThan(4);
+        expect(runTime).to.be.lessThan(6);
       });
     })
 
