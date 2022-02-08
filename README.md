@@ -1,6 +1,6 @@
 # Hot Dice
 [![Test Pull Request](https://github.com/hot-dice/hotdice/actions/workflows/test.yml/badge.svg)](https://github.com/hot-dice/hotdice/actions/workflows/test.yml)
-#### Group Members: Tom McGuire, Anthony Turinski, Xiao Ma
+#### Group Members: Tom McGuire, Anthony Turinski, Max Ma
 
 #### About Hot Dice The Game
 
