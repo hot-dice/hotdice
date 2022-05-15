@@ -20,7 +20,7 @@ jobs:
   # This workflow contains two jobs "test"
   e2e:
     # The type of runner that the job will run on
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -33,7 +33,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: npx serve dist
-          wait-on: http://localhost:5000
+          wait-on: http://localhost:3000
           browser: chrome
           headless: true
           spec: cypress/integration/e2e-hot-dice/*.spec.js

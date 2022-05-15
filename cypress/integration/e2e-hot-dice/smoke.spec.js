@@ -97,6 +97,10 @@ context('Smoke Tests', () => {
         cy.title().should('eq', 'Hot Dice');
       });
 
+      it('should have correct fav icon', () => {
+        cy.document().its('head').find('link[rel="shortcut icon"]').should('have.attr', 'href', 'assets/casino.svg')
+      })
+
       it('should be able to roll on first round', () => {
         cy.get('#roll-dice').should('not.have.attr', 'disabled');
       });
