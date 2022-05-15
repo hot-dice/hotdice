@@ -33,7 +33,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: npx serve dist
-          wait-on: http://localhost:5000
+          wait-on: http://localhost:3000
           browser: chrome
           headless: true
           spec: cypress/integration/e2e-hot-dice/*.spec.js
